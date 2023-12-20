@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import './navbar.css'
 
+interface NavbarProps {
+  token: string | null;
+}
+
 const API_BASE: string = "localhost:3000/";
 
-const Navbar = () => {
+const Navbar = ({ token }: NavbarProps) => {
   return (
     <div className="navbar">
       <h1 className='nav-logo'>rrevif</h1>
@@ -14,12 +18,18 @@ const Navbar = () => {
         <a className="no-style" href={API_BASE}><h4 className='nav-link'>Home</h4></a>
       </div>
       <div className="nav-btn-lgn">
-        <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
-        <Link to="/login" className="no-style">
-        <div className="nav-exclamation">
-          Join rrivef for free
-        </div>
-        </Link>
+        {token ? (
+          <Link to="/logout" className='nav-link nav-login no-style'>Log out</Link>
+        ) : (
+          <div>
+            <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
+            <Link to="/login" className="no-style">
+            <div className="nav-exclamation">
+              Join rrivef for free
+            </div>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )

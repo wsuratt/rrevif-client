@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <main>
       <div className="home-body">
-        <Navbar />
+        <Navbar token={token} />
         <div className="home-spacer" />
         <div className="home-content">
           <p id="home-content-title">

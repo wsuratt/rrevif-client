@@ -2,8 +2,9 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import PropTypes from 'prop-types';
 import Navbar from './components/Navbar';
 import './login.css'
+import { useNavigate } from 'react-router-dom';
 
-const API_BASE: string = "localhost:3000/"
+const API_BASE: string = "localhost:3000/";
 
 interface Credentials {
   username: string | undefined;
@@ -28,6 +29,7 @@ interface LoginProps {
 export default function Login({ setToken }: LoginProps) {
   const [username, setUserName] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -35,7 +37,13 @@ export default function Login({ setToken }: LoginProps) {
       username,
       password
     });
+
+    if(!token) {
+      return;
+    }
+
     setToken(token);
+    navigate("/");
   };
 
   return (
