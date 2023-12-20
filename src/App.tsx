@@ -10,12 +10,12 @@ const App = () => {
     return (
       <div className="App">
         <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login setToken={(token) => setToken({ token })} />} />
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login setToken={(token) => setToken({ token })} />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     );
 };

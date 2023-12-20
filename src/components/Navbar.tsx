@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './navbar.css'
 
 const API_BASE: string = "localhost:3000/";
@@ -13,12 +14,12 @@ const Navbar = () => {
         <a className="no-style" href={API_BASE}><h4 className='nav-link'>Home</h4></a>
       </div>
       <div className="nav-btn-lgn">
-        <a href={API_BASE + "login/"} className='nav-link nav-login no-style'>Log in</a>
-        <a href={API_BASE + "login/"} className="no-style">
+        <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
+        <Link to="/login" className="no-style">
         <div className="nav-exclamation">
-          Get rrivef for free
+          Join rrivef for free
         </div>
-        </a>
+        </Link>
       </div>
     </div>
   )
