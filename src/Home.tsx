@@ -12,10 +12,16 @@ const Home = () => {
     return <Login setToken={(token) => setToken({ token })} />;
   }
 
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken({token: null});
+  };
+
   return (
     <main>
       <div className="home-body">
-        <Navbar token={token} />
+        <Navbar token={token} handleLogout={handleLogout} />
         <div className="home-spacer" />
         <div className="home-content">
           <p id="home-content-title">

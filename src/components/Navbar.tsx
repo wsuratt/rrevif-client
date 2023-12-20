@@ -3,11 +3,12 @@ import './navbar.css'
 
 interface NavbarProps {
   token: string | null;
+  handleLogout: () => void;
 }
 
 const API_BASE: string = "localhost:3000/";
 
-const Navbar = ({ token }: NavbarProps) => {
+const Navbar = ({ token, handleLogout }: NavbarProps) => {
   return (
     <div className="navbar">
       <h1 className='nav-logo'>rrevif</h1>
@@ -19,7 +20,7 @@ const Navbar = ({ token }: NavbarProps) => {
       </div>
       <div className="nav-btn-lgn">
         {token ? (
-          <Link to="/logout" className='nav-link nav-login no-style'>Log out</Link>
+          <a onClick={handleLogout} className='nav-link nav-login no-style'>Log out</a>
         ) : (
           <div>
             <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
