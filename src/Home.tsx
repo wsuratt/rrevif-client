@@ -1,9 +1,17 @@
 import Navbar from "./components/Navbar";
+import useToken from "./components/useToken";
+import Login from "./Login"
 import './home.css'
 
 const API_BASE: string = "localhost:3000"
 
 const Home = () => {
+  const { token, setToken } = useToken();
+  
+  if (!token) {
+    return <Login setToken={(token) => setToken({ token })} />;
+  }
+
   return (
     <main>
       <div className="home-body">
