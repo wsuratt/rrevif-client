@@ -1,0 +1,41 @@
+.home-body {
+  background-color: #0747A6;
+}
+
+.home-spacer {
+  height: 73px;
+}
+
+.home-content {
+  margin-top: 100px;
+  margin-left: 100px;
+  color: white;
+  width: 500px;
+}
+
+#home-content-title {
+  font-weight:600;
+  font-size: 48px;
+}
+
+.home-content-desc {
+  font-weight: 600;
+  font-size: medium;
+}
+
+.a-btn {
+  text-decoration: none;
+}
+.submit-button {
+  background-color: #E0F4FF;
+  border-radius: 5px;
+  height: 50px;
+  width: 170px;
+  font-weight: 800;
+  color: #00005a;
+  text-align: center;
+}
+
+.submit-text {
+  padding-top: 15px;
+}
