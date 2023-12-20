@@ -1,6 +1,6 @@
 import './navbar.css'
 
-const API_BASE: string = "localhost:3000";
+const API_BASE: string = "localhost:3000/";
 
 const Navbar = () => {
   return (
@@ -13,8 +13,8 @@ const Navbar = () => {
         <a className="no-style" href={API_BASE}><h4 className='nav-link'>Home</h4></a>
       </div>
       <div className="nav-btn-lgn">
-        <a href={API_BASE} className='nav-link nav-login no-style'>Log in</a>
-        <a href={API_BASE} className="no-style">
+        <a href={API_BASE + "login/"} className='nav-link nav-login no-style'>Log in</a>
+        <a href={API_BASE + "login/"} className="no-style">
         <div className="nav-exclamation">
           Get rrivef for free
         </div>
