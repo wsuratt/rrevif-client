@@ -1,5 +1,5 @@
-import Navbar from "./components/Navbar";
-import useToken from "./components/useToken";
+import Navbar from "../components/Navbar";
+import useToken from "../utils/useToken";
 import Login from "./Login"
 import './home.css'
 

@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import PropTypes from 'prop-types';
-import Navbar from './components/Navbar';
+import Navbar from '../components/Navbar';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
 
