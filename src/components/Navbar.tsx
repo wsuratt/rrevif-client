@@ -20,7 +20,7 @@ const Navbar = ({ token, handleLogout }: NavbarProps) => {
       </div>
       <div className="nav-btn-lgn">
         {token ? (
-          <a href={API_BASE} onClick={handleLogout} className='nav-link nav-login no-style'>Log out</a>
+          <a href={CLIENT_BASE} onClick={handleLogout} className='nav-link nav-login no-style'>Log out</a>
         ) : (
           <div>
             <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
