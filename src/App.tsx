@@ -5,6 +5,7 @@ import TasksView from './TasksView';
 
 import Login from './pages/Login';
 import useToken from "./utils/useToken";
+import Signup from './pages/Signup';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login setToken={(token) => setToken({ token })} />} />
+            <Route path="/sign-up" element={<Signup setToken={(token) => setToken({ token })} />} />
             <Route path="/tasks-view" element={<TasksView />} />
           </Routes>
         </BrowserRouter>
