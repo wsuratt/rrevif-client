@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs'
 
 const API_BASE: string = "localhost:3000/";
 
@@ -12,7 +13,7 @@ interface Credentials {
 }
 
 async function loginUser(credentials: Credentials) {
-  return fetch('http://localhost:8080/login', {
+  return fetch('http://localhost:8080/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -38,7 +39,8 @@ export default function Login({ setToken }: LoginProps) {
       password
     });
 
-    if(!token) {
+    if(token.error) {
+      alert(token.error);
       return;
     }
 
@@ -55,7 +57,7 @@ export default function Login({ setToken }: LoginProps) {
           <input className="login-input" placeholder="Enter your email" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} />
         </label>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(bcrypt.hashSync(e.target.value, 10))} />
         </label>
         <div>
           <button className="login-submit" type="submit"><p className="bold-text">Continue</p></button>
