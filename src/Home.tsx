@@ -3,7 +3,7 @@ import useToken from "./components/useToken";
 import Login from "./Login"
 import './home.css'
 
-const API_BASE: string = "localhost:3000"
+const CLIENT_BASE: string = "localhost:3000"
 
 const Home = () => {
   const { token, setToken } = useToken();
@@ -31,7 +31,7 @@ const Home = () => {
           <p className="home-content-desc">
             Build up your portfolio and make money
           </p>
-          <a href={API_BASE} className="a-btn">
+          <a href={CLIENT_BASE} className="a-btn">
             <div className="submit-button">
               <p className="submit-text">Sign up - it's free</p>
             </div>

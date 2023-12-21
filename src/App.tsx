@@ -3,6 +3,7 @@ import Home from './Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import useToken from "./components/useToken";
+import TasksView from './TasksView';
 
 const App = () => {
     const { token, setToken } = useToken();
@@ -14,6 +15,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login setToken={(token) => setToken({ token })} />} />
+            <Route path="/tasks-view" element={<TasksView />} />
           </Routes>
         </BrowserRouter>
       </div>
