@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './login.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
 
 const API_BASE: string = "localhost:3000/";
@@ -72,7 +72,7 @@ export default function Login({ setToken }: LoginProps) {
           </button>
         </div>
       </form>
-      <a href={API_BASE}><p className="login-create">Create an account</p></a>
+      <Link to="/sign-up/"><p className="login-create">Create an account</p></Link>
     </div>
   );
 }
