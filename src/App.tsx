@@ -1,9 +1,11 @@
 import React from 'react';
-import Home from './Home'
+import Home from './pages/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './Login';
-import useToken from "./components/useToken";
 import TasksView from './TasksView';
+
+import Login from './pages/Login';
+import useToken from "./utils/useToken";
+
 
 const App = () => {
     const { token, setToken } = useToken();
