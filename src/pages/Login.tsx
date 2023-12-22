@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './login.css'
 import { Link, useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs'
 
 const API_BASE: string = "localhost:3000/";
 
@@ -54,10 +53,10 @@ export default function Login({ setToken }: LoginProps) {
       <p className="bold-text">Log in to continue</p>
       <form onSubmit={handleSubmit}>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your email" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} />
+          <input className="login-input" placeholder="Enter your username" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} />
         </label>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(bcrypt.hashSync(e.target.value, 10))} />
+          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
         </label>
         <div>
           <button className="login-submit" type="submit"><p className="bold-text">Continue</p></button>

@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './login.css'
 import { Link, useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs'
 
 const CLIENT_BASE: string = "localhost:3000/";
 const SERVER_BASE: string = "localhost:8080/";
 
 interface Credentials {
   username: string | undefined;
-  password_hash: string | undefined;
+  password: string | undefined;
   email: string | undefined;
   wallet_address: string | undefined;
 }
@@ -32,7 +31,7 @@ interface LoginProps {
 
 export default function Signup({ setToken }: LoginProps) {
   const [username, setUserName] = useState<string | undefined>();
-  const [password_hash, setPassword] = useState<string | undefined>();
+  const [password, setPassword] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
   const [wallet_address, setWallet] = useState<string | undefined>();
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export default function Signup({ setToken }: LoginProps) {
     e.preventDefault();
     const token = await signupUser({
       username,
-      password_hash,
+      password,
       email,
       wallet_address
     });
@@ -68,10 +67,10 @@ export default function Signup({ setToken }: LoginProps) {
           <input className="login-input" placeholder="Enter your username" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} required />
         </label>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(bcrypt.hashSync(e.target.value, 10))} required />
+          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} required />
         </label>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your wallet address" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setWallet(e.target.value)} required />
+          <input className="login-input" placeholder="Enter your wallet address" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setWallet(e.target.value)} required />
         </label>
         <div>
           <button className="login-submit" type="submit"><p className="bold-text">Continue</p></button>
