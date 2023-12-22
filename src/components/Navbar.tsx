@@ -22,12 +22,12 @@ const Navbar = ({ token, handleLogout }: NavbarProps) => {
         {token ? (
           <a href={CLIENT_BASE} onClick={handleLogout} className='nav-link nav-login no-style'>Log out</a>
         ) : (
-          <div>
+          <div className="nav-btn-lgn">
             <Link to="/login" className='nav-link nav-login no-style'>Log in</Link>
             <Link to="/login" className="no-style">
-            <div className="nav-exclamation">
-              Join rrivef for free
-            </div>
+              <div className="nav-exclamation">
+                Join rrivef for free
+              </div>
             </Link>
           </div>
         )}

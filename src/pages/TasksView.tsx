@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Navbar from "./components/Navbar";
-import useToken from "./utils/useToken";
-import Login from "./pages/Login"
+import Navbar from "../components/Navbar";
+import useToken from "../utils/useToken";
+import Login from "./Login"
 import './tasksview.css'
 import { useState, useEffect } from 'react';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './pages/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import TasksView from './TasksView';
+import TasksView from './pages/TasksView';
 
 import Login from './pages/Login';
 import useToken from "./utils/useToken";
