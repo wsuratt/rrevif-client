@@ -3,12 +3,13 @@ import Navbar from "../components/Navbar";
 import useToken from "../utils/useToken";
 import Login from "./Login"
 import './tasksview.css'
+import TaskCard from "../components/TaskCard";
 import { useState, useEffect } from 'react';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
 
-const TasksView = () => {
+const Tasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const { token, setToken } = useToken();
   
@@ -17,10 +18,17 @@ const TasksView = () => {
   }, [])
 
   const GetTasks = () => {
-    fetch(API_BASE + "api/tasks/")
-      .then(res => res.json())
-      .then(data => setTasks(data))
-      .catch(err => console.error("Error: ", err))
+    if(token) {
+      fetch(API_BASE + "api/tasks/", {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+        .then(res => res.json())
+        .then(data => setTasks(data))
+        .catch(err => console.error("Error: ", err))
+    }
   }
 
   const handleLogout = () => {
@@ -37,16 +45,11 @@ const TasksView = () => {
       <div className="home-spacer" />
       <div className="tasks-container">
       {tasks.map((task) => (
-        <a>
-          <div className="task-container">
-            <h1>{task.task_title}</h1>
-            <p>{task.task_description}</p>
-          </div>
-        </a>
+        <TaskCard task={task} />
       ))}
       </div>
     </div>
   )
 };
 
-export default TasksView;
+export default Tasks;
