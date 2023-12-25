@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import { Link } from 'react-router-dom';
 import useToken from "../utils/useToken";
 import Login from "./Login"
 import './home.css'
@@ -30,11 +31,11 @@ const Home = () => {
           <p className="home-content-desc">
             Build up your portfolio and make money
           </p>
-          <a href={CLIENT_BASE} className="a-btn">
+          <Link className="a-btn" to="/sign-up">
             <div className="submit-button">
               <p className="submit-text">Sign up - it's free</p>
             </div>
-          </a>
+          </Link>
           <div className="home-spacer" />
         </div>
       </div>
