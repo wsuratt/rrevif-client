@@ -5,6 +5,7 @@ import Login from "./Login"
 import './tasksview.css'
 import TaskCard from "../components/TaskCard";
 import { useState, useEffect } from 'react';
+import AddTask from '../components/AddTask';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -43,6 +44,7 @@ const Tasks = () => {
     <div className="tasks-view-container">
       <Navbar token={token} handleLogout={handleLogout} />
       <div className="home-spacer" />
+      <AddTask token={token} />
       <div className="tasks-container">
       {tasks.map((task) => (
         <TaskCard task={task} />
