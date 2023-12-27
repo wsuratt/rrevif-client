@@ -1,0 +1,23 @@
+.profile-spacer {
+  height: 73px;
+}
+
+.profile-title {
+  padding-left: 10%;
+  padding-bottom: 30px;
+  padding-top: 25px;;
+}
+
+.posted-task-container, .accepted-task-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.task-title {
+  padding-left: 10%;
+}

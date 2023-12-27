@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import useToken from "./utils/useToken";
 import Signup from './pages/Signup';
 import About from './pages/About';
+import Profile from './pages/Profile';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/tasks" element={<Tasks />} />
             {/* <Route path="/tasks/:title" element={<Task />} /> */}
             <Route path="/about" element={<About />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </div>
