@@ -42,6 +42,7 @@ export default function Profile() {
           console.log("Response data:", data);
           setUserName(data.username);
           setPosted([...data.postedTasks]);
+          setAccepted([...data.tasksToSolve]);
             // Handle the case where postedTasks is not an array
         })
         .catch(err => console.error("Error: ", err))
