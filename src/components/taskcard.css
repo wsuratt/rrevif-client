@@ -23,6 +23,11 @@
   font-size: large;
 }
 
+.task-claim-button:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
+
 .task-header-wrapper {
   display: flex;
   flex-direction: row;

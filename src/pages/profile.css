@@ -48,6 +48,11 @@
   z-index: 3;
 }
 
+.add-button:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
+
 .profile-head {
   display: flex;
   flex-direction: row;
