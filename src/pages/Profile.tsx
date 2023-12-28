@@ -7,6 +7,7 @@ import useToken from "../utils/useToken";
 import Task from './Task';
 import TaskCard from '../components/TaskCard';
 import AddTask from '../components/AddTask';
+import Login from './Login';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -21,6 +22,7 @@ export default function Profile() {
   const [posted, setPosted] = useState<any[]>([]);
   const { token, setToken } = useToken();
   const [popupActive, setPopupActive] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     GetUserInfo();
@@ -29,6 +31,8 @@ export default function Profile() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken({token: null});
+
+    navigate("/");
   };
 
   const switchPopup = () => {
@@ -43,17 +47,26 @@ export default function Profile() {
           'Authorization': 'Bearer ' + token
         }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 403) {
+            handleLogout();
+          }
+          return res.json();
+        })
         .then(data => {
           console.log("Response data:", data);
           setUserName(data.username);
           setPosted([...data.postedTasks]);
+          setAccepted([...data.tasksToSolve]);
             // Handle the case where postedTasks is not an array
         })
         .catch(err => console.error("Error: ", err))
     }
   }
 
+  if (!token) {
+    return <Login setToken={(token) => setToken({ token })} />;
+  }
   return (
     <div className="profile-container">
       <Navbar token={token} handleLogout={handleLogout}/>

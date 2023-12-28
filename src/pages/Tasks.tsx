@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import useToken from "../utils/useToken";
-import Login from "./Login"
 import './tasksview.css'
 import TaskCard from "../components/TaskCard";
 import { useState, useEffect } from 'react';
 import AddTask from '../components/AddTask';
+
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -13,6 +13,7 @@ const API_BASE: string = "http://localhost:8080/";
 const Tasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const { token, setToken } = useToken();
+  const navigate = useNavigate();
   
   useEffect(() => {
     GetTasks();
@@ -35,11 +36,10 @@ const Tasks = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken({token: null});
+
+    navigate("/");
   };
   
-  if (!token) {
-    return <Login setToken={(token) => setToken({ token })} />;
-  }
   return (
     <div className="tasks-view-container">
       <Navbar token={token} handleLogout={handleLogout} />
