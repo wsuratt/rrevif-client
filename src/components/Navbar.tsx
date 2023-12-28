@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import './navbar.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBolt } from '@fortawesome/free-solid-svg-icons'
 
 interface NavbarProps {
   token: string | null;
@@ -11,7 +13,7 @@ const CLIENT_BASE: string = "/";
 const Navbar = ({ token, handleLogout }: NavbarProps) => {
   return (
     <div className="navbar">
-      <Link to={CLIENT_BASE}><h1 className='nav-logo'>rrevif</h1></Link>
+      <Link to={CLIENT_BASE}><h1 className='nav-logo'><FontAwesomeIcon icon={faBolt} />rrevif</h1></Link>
       <div className="nav-links">
         <Link className="no-style" to={CLIENT_BASE}><h4 className='nav-link'>Home</h4></Link>
         <Link className="no-style" to="/tasks"><h4 className='nav-link'>Listings</h4></Link>
