@@ -33,6 +33,11 @@
   margin-top: 8px;
 }
 
+.x-button:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
+
 .add-task-label {
   display: block;
   margin-bottom: 8px;
@@ -56,4 +61,8 @@
   height: 40px;
   color: white;
   margin-bottom: 25px;
+}
+.add-task-submit:hover {
+  background-color: #003688;
+  cursor: pointer;
 }
