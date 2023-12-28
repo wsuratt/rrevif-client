@@ -39,3 +39,23 @@
 .submit-text {
   padding-top: 15px;
 }
+
+.home-tasks-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.home-tasks-title {
+  margin-left: 45px;
+  margin-top: 75px;
+  margin-bottom: 25px;
+}
+
+.view-more-link {
+  text-decoration: none;
+  color: black;
+  position: absolute;
+  right: 4%;
+}

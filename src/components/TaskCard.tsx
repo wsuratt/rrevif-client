@@ -46,12 +46,12 @@ const TaskCard = ({ task, token }: TaskCardProps) => {
   return (
     <a>
       <div className="task-container">
-        <h1>{task.task_title}</h1>
-        <p>{task.task_description}</p>
-        <p>{task.task_price}</p>
-      </div>
-      <div>
-        <button onClick={handleClaim}><p className="bold-text">Claim</p></button>
+        <div className="task-header-wrapper">
+          <p className="task-header">{task.task_title}</p>
+          <p className="task-price">{`$${(Math.round(task.task_price * 100) / 100).toFixed(2)}`}</p>
+        </div>
+        <p className="task-description">{task.task_description}</p>
+        <button className="bold-text task-claim-button" onClick={handleClaim}>Claim</button>
       </div>
     </a>
   )

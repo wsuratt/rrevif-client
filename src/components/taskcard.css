@@ -1,9 +1,55 @@
 .task-container {
+  position: relative;
   width: 250px;
   height: 250px;
-  margin: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 3px;
-  padding: 10px;
-  text-align: center;
+  margin: 8px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 4px;
+  padding: 7.5px;
+}
+
+.task-claim-button{
+  width: 90%;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  border-radius: 4px;
+  border: none;
+  background-color: #0747A6;
+  color: white;
+  font-weight: 600;
+  font-size: large;
+}
+
+.task-header-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.task-header {
+  font-weight: 700;
+  font-size: large;
+  margin-top: 7.5px;
+  padding-left: 7.5px;
+}
+
+.task-price {
+  font-weight: 700;
+  font-size: large;
+  margin-left: auto;
+  padding-right: 7.5px;
+  margin-top: 7.5px;
+}
+
+
+.task-description {
+  overflow: hidden;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }

@@ -11,6 +11,7 @@
 .posted-task-container, .accepted-task-container {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
   padding-left: 10%;
   padding-right: 10%;
   display: flex;
@@ -20,4 +21,34 @@
 
 .task-title {
   padding-left: 10%;
+  margin-top: 10px;
+}
+
+.profile-dimmed {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51,51,51,0.7);
+  z-index: 10;
+}
+
+.add-button {
+  background-color: #0747A6;
+  width: 145px;
+  text-align: center;
+  height: 30px;
+  margin-top: 30px;
+  margin-left: 50px;
+  padding-top: 10px;
+  color: white;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.profile-head {
+  display: flex;
+  flex-direction: row;
 }
