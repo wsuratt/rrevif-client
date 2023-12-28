@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useToken from "../utils/useToken";
 import Task from './Task';
 import TaskCard from '../components/TaskCard';
+import Login from './Login';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -19,6 +20,7 @@ export default function Profile() {
   const [accepted, setAccepted] = useState<any[]>([]);
   const [posted, setPosted] = useState<any[]>([]);
   const { token, setToken } = useToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
     GetUserInfo();
@@ -27,6 +29,8 @@ export default function Profile() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken({token: null});
+
+    navigate("/");
   };
 
   const GetUserInfo = () => {
@@ -37,7 +41,12 @@ export default function Profile() {
           'Authorization': 'Bearer ' + token
         }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 403) {
+            handleLogout();
+          }
+          return res.json();
+        })
         .then(data => {
           console.log("Response data:", data);
           setUserName(data.username);
@@ -49,6 +58,9 @@ export default function Profile() {
     }
   }
 
+  if (!token) {
+    return <Login setToken={(token) => setToken({ token })} />;
+  }
   return (
     <div className="profile-container">
       <Navbar token={token} handleLogout={handleLogout}/>
