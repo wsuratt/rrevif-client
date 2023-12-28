@@ -5,6 +5,7 @@ const API_BASE: string = "http://localhost:8080/";
 
 interface AddTaskProps {
   token: string | null;
+  switchPopup: () => void;
 }
 
 interface NewTask {
@@ -27,13 +28,14 @@ async function addTask(token: string | null, new_task: NewTask) {
   }
 }
 
-export default function AddTask({ token }: AddTaskProps) {
+export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   const [price, setPrice] = useState<string | undefined>();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    switchPopup();
     
     const addedTask = await addTask(token, {
       title,
@@ -43,25 +45,27 @@ export default function AddTask({ token }: AddTaskProps) {
 
     if(addedTask.error) {
       alert(addedTask.error);
-
     }
   };
 
   return (
-    <div className="login-wrapper">
+    <div className="add-task-wrapper">
+      <div>
       <p className="bold-text">Create a new task</p>
+      </div>
+      <button className="x-button" onClick={switchPopup}>x</button>
       <form onSubmit={handleSubmit}>
-        <label className="login-label">
-          <input className="login-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
+        <label className="add-task-label">
+          <input className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
         </label>
-        <label className="login-label">
-          <input className="login-input" placeholder="Enter task description" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />
+        <label className="add-task-label">
+          <input className="add-task-input" placeholder="Enter task description" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />
         </label>
-        <label className="login-label">
-          <input className="login-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
+        <label className="add-task-label">
+          <input className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
         <div>
-          <button className="login-submit" type="submit"><p className="bold-text">Continue</p></button>
+          <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>
       </form>
     </div>

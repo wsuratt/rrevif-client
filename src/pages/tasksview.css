@@ -9,5 +9,12 @@ body {
 .tasks-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 80%;
+}
+
+.tasks-explore-head {
+  margin-left: 165px;
+  margin-top: 25px;
 }

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useToken from "../utils/useToken";
 import Task from './Task';
 import TaskCard from '../components/TaskCard';
+import AddTask from '../components/AddTask';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -19,6 +20,7 @@ export default function Profile() {
   const [accepted, setAccepted] = useState<any[]>([]);
   const [posted, setPosted] = useState<any[]>([]);
   const { token, setToken } = useToken();
+  const [popupActive, setPopupActive] = useState(false)
 
   useEffect(() => {
     GetUserInfo();
@@ -28,6 +30,10 @@ export default function Profile() {
     localStorage.removeItem('token');
     setToken({token: null});
   };
+
+  const switchPopup = () => {
+    setPopupActive(!popupActive);
+  }
 
   const GetUserInfo = () => {
     if (token) {
@@ -52,7 +58,18 @@ export default function Profile() {
     <div className="profile-container">
       <Navbar token={token} handleLogout={handleLogout}/>
       <div className="profile-spacer" />
-      <h1 className="profile-title">{`${username}'s profile`}</h1>
+      <div className="profile-head">
+        <h1 className="profile-title">{`${username}'s profile`}</h1>
+        {!popupActive ? (
+          <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
+        ): ''}
+      </div>
+      {popupActive ? (
+        <>
+          <div className="profile-dimmed"/>
+          <AddTask token={token} switchPopup={() => switchPopup()} />
+        </>
+      ) : ''}
       <h1 className='task-title'>Posted Tasks:</h1>
       {(posted.length > 0 ? 
       <div className="posted-task-container">
