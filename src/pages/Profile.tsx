@@ -57,14 +57,14 @@ export default function Profile() {
       {(posted.length > 0 ? 
       <div className="posted-task-container">
       {posted.map((task, index) => (
-        <TaskCard key={index} task={task} />
+        <TaskCard token={token} key={index} task={task} />
       ))}
     </div>: <h3 className='task-title'>You have not posted any tasks.</h3>)}
       <h1 className='task-title'>Accepted Tasks:</h1>
       {(accepted.length > 0 ? 
       <div className="accepted-task-container">
       {accepted.map((task, index) => (
-        <TaskCard key={index} task={task} />
+        <TaskCard token={token} key={index} task={task} />
       ))}
     </div>: <h3 className='task-title'>You have not accepted any tasks.</h3>)}
       

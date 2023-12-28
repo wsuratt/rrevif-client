@@ -47,7 +47,7 @@ const Tasks = () => {
       <AddTask token={token} />
       <div className="tasks-container">
       {tasks.map((task) => (
-        <TaskCard task={task} />
+        <TaskCard task={task} token ={token} />
       ))}
       </div>
     </div>
