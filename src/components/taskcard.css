@@ -1,3 +1,9 @@
+Link {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
 .task-container {
   position: relative;
   width: 250px;
@@ -7,6 +13,8 @@
   border-radius: 4px;
   padding: 7.5px;
   background-color: white;
+  color: black;
+  display: inline-block;
 }
 
 .task-claim-button{

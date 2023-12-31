@@ -61,8 +61,7 @@ export default function Profile() {
           return res.json();
         })
         .then(data => {
-          console.log("Response data:", data);
-          console.log("poster ratings: ", data.posterRating)
+          console.log(data)
           setUserName(data.username);
           setPosted([...data.postedTasks]);
           setAccepted([...data.tasksToSolve]);
