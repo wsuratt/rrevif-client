@@ -3,14 +3,13 @@
 }
 
 .profile-title {
-  padding-left: 10%;
   padding-bottom: 30px;
   padding-top: 25px;;
 }
 
 .posted-task-container, .accepted-task-container {
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
+  width: 74.5%;
   margin-bottom: 25px;
   padding-left: 10%;
   padding-right: 10%;
@@ -20,7 +19,7 @@
 }
 
 .task-title {
-  padding-left: 10%;
+  margin-left: 220px;
   margin-top: 10px;
 }
 
@@ -40,12 +39,43 @@
   text-align: center;
   height: 30px;
   margin-top: 30px;
-  margin-left: 50px;
+  margin-left: 30px;
   padding-top: 10px;
   color: white;
   font-weight: 700;
   border-radius: 4px;
   z-index: 3;
+}
+
+.edit-profile-button {
+  background-color: aliceblue;
+  width: 145px;
+  text-align: center;
+  height: 27px;
+  margin-top: 30px;
+  margin-left: 30px;
+  padding-top: 7px;
+  color: rgb(52, 52, 52);
+  border: solid 3px rgb(52, 52, 52);;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.link-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-link-display {
+  margin-bottom: 7.5px;
+}
+
+.edit-profile-button:hover {
+  border: solid 3px rgb(52, 52, 52);
+  background-color: rgb(52, 52, 52);
+  color: aliceblue;
+  cursor: pointer;
 }
 
 .add-button:hover {
@@ -56,4 +86,69 @@
 .profile-head {
   display: flex;
   flex-direction: row;
+  margin-left: 24px;
+}
+
+.profile-block {
+  background-color: white;
+  width: 74%;
+  margin: auto;
+  margin-top: 45px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 4px;
+}
+
+.review-block {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.review-star {
+  padding: 0;
+  padding-right: 7.5px;
+  padding-top: 2px;
+  margin: 0;
+}
+
+.review-words {
+  padding: 0;
+  margin: 0;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.review-title {
+  font-weight: 800;
+}
+
+.profile-item-container, .bio-container {
+  padding-left: 25px;
+}
+
+.bio-container {
+  width: 612px;
+}
+
+.wallet-address {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  color: black;
+  opacity: 0;
+}
+
+.hidden {
+  background-color: rgba(57, 57, 57, 0.831);
+  display: inline-block;
+}
+
+.hidden:hover {
+  background-color: white;
+}
+
+.wallet-address:hover {
+  opacity: 1;
 }
