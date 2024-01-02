@@ -1,5 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import './addtask.css'
+import { createQR, encodeURL } from '@solana/pay';
 
 const API_BASE: string = "http://localhost:8080/";
 
@@ -32,6 +33,29 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   const [price, setPrice] = useState<string | undefined>();
+  const [qrCode, setQrCode] = useState<string>();
+  const [count, setCount] = useState<string>('');
+
+  useEffect(() => {
+    generateQr();
+  }, []);
+
+  const generateQr = async () => {
+    const apiUrl = `${window.location.protocol}/${window.location.host}/api/pay`;
+    const label = 'label';
+    const message = 'message';
+    const url = encodeURL({ link: new URL(apiUrl), label, message });
+    const qr = createQR(url);
+    const qrBlob = await qr.getRawData('png');
+    if (!qrBlob) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (typeof event.target?.result === 'string') {
+        setQrCode(event.target.result);
+      }
+    };
+    reader.readAsDataURL(qrBlob);
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -64,6 +88,13 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         <label className="add-task-label">
           <input className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
+        {qrCode && (
+          <img
+            src={qrCode}
+            style={{ position: "relative", background: "white", width: 200, height: 200 }}
+            alt="QR Code"
+          />
+        )}
         <div>
           <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>
