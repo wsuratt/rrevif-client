@@ -26,6 +26,7 @@ const App = () => {
             {/* <Route path="/tasks/:title" element={<Task />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/task/:task_id" element={<Task />} />
           </Routes>
         </BrowserRouter>
       </div>

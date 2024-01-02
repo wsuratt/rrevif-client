@@ -1,0 +1,88 @@
+.full-task-spacer {
+  height: 77px;
+}
+
+.full-task-claim-button{
+  background-color: #0747A6;
+  width: 145px;
+  text-align: center;
+  height: 40px;
+  margin-top: 30px;
+  margin-left: 30px;
+  color: white;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 3;
+  border: none;
+}
+
+.edit-task-button {
+  background-color: aliceblue;
+  width: 145px;
+  text-align: center;
+  height: 27px;
+  margin-top: 30px;
+  margin-left: 30px;
+  padding-top: 7px;
+  color: rgb(52, 52, 52);
+  border: solid 3px rgb(52, 52, 52);;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.edit-task-button:hover {
+  border: solid 3px rgb(52, 52, 52);
+  background-color: rgb(52, 52, 52);
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.full-task-claim-button:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
+
+.full-task-block {
+  background-color: white;
+  width: 74%;
+  margin: auto;
+  margin-top: 45px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 4px;
+}
+
+.full-task-head {
+  display: flex;
+  flex-direction: row;
+  margin-left: 24px;
+}
+
+.full-task-title {
+  padding-top: 25px;
+}
+
+.username-cont {
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.username {
+  font-weight: normal;
+  margin: 0;
+  margin-left: 5px;
+}
+
+.description-container, .username-cont, .task-price-container {
+  margin-left: 25px;
+}
+
+.description-container {
+  width: 612px;
+}
+
+.description-title {
+  font-weight: 700;
+}

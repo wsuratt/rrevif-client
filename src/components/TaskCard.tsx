@@ -1,5 +1,6 @@
 import { FormEvent } from 'react';
 import './taskcard.css'
+import { Link } from 'react-router-dom';
 
 const API_BASE: string = "http://localhost:8080/";
 
@@ -44,7 +45,7 @@ const TaskCard = ({ task, token }: TaskCardProps) => {
   };
 
   return (
-    <a>
+    <Link to={`/task/` + (task.id)}>
       <div className="task-container">
         <div className="task-header-wrapper">
           <p className="task-header">{task.task_title}</p>
@@ -53,7 +54,7 @@ const TaskCard = ({ task, token }: TaskCardProps) => {
         <p className="task-description">{task.task_description}</p>
         <button className="bold-text task-claim-button" onClick={handleClaim}>Claim</button>
       </div>
-    </a>
+    </Link>
   )
 }
 
