@@ -9,6 +9,7 @@ import useToken from "./utils/useToken";
 import Signup from './pages/Signup';
 import About from './pages/About';
 import Profile from './pages/Profile';
+import Users from './pages/Users';
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/login" element={<Login setToken={(token) => setToken({ token })} />} />
             <Route path="/sign-up" element={<Signup setToken={(token) => setToken({ token })} />} />
             <Route path="/tasks" element={<Tasks />} />
