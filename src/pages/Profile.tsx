@@ -47,6 +47,7 @@ export default function Profile() {
   }
 
   const GetUserInfo = () => {
+    // refactor to use User objects
     if (token) {
       fetch(API_BASE + "api/profile/", {
         method: 'GET',
@@ -97,7 +98,7 @@ export default function Profile() {
         ) : ''}
         <div className="bio-container">
         <p className="review-title">Bio</p>
-        {bio.length > 0 ? (
+        {bio?.length > 0 ? (
           <p>{bio}</p>
         ): <p>No bio yet!</p>}
         </div>
@@ -106,15 +107,15 @@ export default function Profile() {
           <div className="review-block">
             <p className="review-words">{`Poster:`}</p>
             <FontAwesomeIcon className="review-star" icon={faStar} />
-            {posterRating.length > 0 ? (
-              <p className="review-words">{(Math.round(posterRating.reduce((a, b) => (a.rating)*1 + (b.rating)*1) / (posterRating.length) * 100) / 100).toFixed(2)}</p>
+            {posterRating?.length > 0 ? (
+              <p className="review-words">{(Math.round(posterRating.reduce((a, b) => (a.rating)*1 + (b.rating)*1) / (posterRating?.length) * 100) / 100).toFixed(2)}</p>
             ): <p className="review-words">No ratings</p>}
           </div>
           <div className="review-block">
             <p className="review-words">{`Solver:`}</p>
             <FontAwesomeIcon className="review-star" icon={faStar} />
-            {solverRating.length > 0 ? (
-              <p className="review-words">{(Math.round(solverRating.reduce((a, b) => (a.rating)*1 + (b.rating)*1) / (solverRating.length) * 100) / 100).toFixed(2)}</p>
+            {solverRating?.length > 0 ? (
+              <p className="review-words">{(Math.round(solverRating.reduce((a, b) => (a.rating)*1 + (b.rating)*1) / (solverRating?.length) * 100) / 100).toFixed(2)}</p>
             ): <p className="review-words">No ratings</p>}
           </div>
         </div>
@@ -135,14 +136,14 @@ export default function Profile() {
         <div style={{"height": "20px"}}></div>
       </div>
       <h1 className='task-title'>Posted Tasks:</h1>
-      {(posted.length > 0 ? 
+      {(posted?.length > 0 ? 
       <div className="posted-task-container">
       {posted.map((task, index) => (
         <TaskCard token={token} key={index} task={task} />
       ))}
     </div>: <h3 className='task-title'>You have not posted any tasks.</h3>)}
       <h1 className='task-title'>Accepted Tasks:</h1>
-      {(accepted.length > 0 ? 
+      {(accepted?.length > 0 ? 
       <div className="accepted-task-container">
       {accepted.map((task, index) => (
         <TaskCard token={token} key={index} task={task} />

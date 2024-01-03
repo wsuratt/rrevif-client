@@ -28,7 +28,9 @@ const Tasks = () => {
         }
       })
         .then(res => res.json())
-        .then(data => setTasks(data))
+        .then(data => {
+          console.log(data)
+          setTasks(data)})
         .catch(err => console.error("Error: ", err))
     }
   }
@@ -47,7 +49,9 @@ const Tasks = () => {
       <h1 className="tasks-explore-head">Explore Tasks:</h1>
       <div className="tasks-container">
       {tasks.map((task) => (
-        <TaskCard task={task} token ={token} />
+        (task.solver_id == null ? 
+          <TaskCard task={task} token ={token} />
+        : <></>)
       ))}
       </div>
     </div>
