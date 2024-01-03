@@ -1,0 +1,53 @@
+.users-spacer {
+  height: 74px;
+}
+
+.users-table {
+  border-collapse: collapse;
+}
+
+.user-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.table-content-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.users-table-data {
+  padding: 30px 50px 30px;
+}
+
+.users-table-row {
+  border-style: solid;
+  border-color: grey;
+}
+
+.delete-user {
+  background-color: crimson;
+  color: white;
+  padding: 7.5px 10px 7.5px;
+  text-align: center;
+  border-radius: 3px;
+  margin-right: 15px;
+}
+
+.delete-user:hover {
+  background-color: rgb(159, 12, 41);
+  cursor: pointer;
+}
+
+.x-mark {
+  color: white;
+  margin: auto;
+  padding-top: 4px;
+}
+
+.table-title {
+  margin: 35px auto 45px;
+}
