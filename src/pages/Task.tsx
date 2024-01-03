@@ -7,6 +7,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import Navbar from '../components/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import Review from '../components/Review';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -111,10 +112,10 @@ export default function Task() {
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{taskName}</h1>
-          {(/*!isOwner && !*/(solver.length > 0) ? 
+          {(!isOwner && !(solver.length > 0) ? 
             <button className="bold-text full-task-claim-button" onClick={handleClaim}>Claim Task</button>
           : <></>)}
-          {(isOwner /*&& !(solver.length > 0)*/ ? 
+          {(isOwner && !(solver.length > 0) ? 
             <div className="edit-task-button">Edit Task</div>
           : <></>)}
         </div>
@@ -137,7 +138,7 @@ export default function Task() {
         </div>
         <div style={{"height": "20px"}}></div>
       </div>
-
+        <Review token={token} reviewee={solver} review_type='solver'/>
     </div>
   )
 }

@@ -1,0 +1,42 @@
+.review-wrapper {
+  background-color: white;
+  width: 550px;
+  min-width: 550px;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: xx-large;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-desc {
+  width: 50%;
+}
+
+.add-review-submit {
+  background-color: #0747A6;
+  width: 145px;
+  text-align: center;
+  margin-top: 7.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-weight: 700;
+  border-radius: 4px;
+  border: none;
+  z-index: 3;
+}
+
+.add-review-submit:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
