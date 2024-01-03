@@ -144,7 +144,7 @@ export default function Task() {
           {(isOwner && !solver ? 
             <div className="edit-task-button">Edit Task</div>
           : <></>)}
-          {(solver ?
+          {(isOwner && solver ?
               <button className="edit-task-button" onClick={handleApprove}>Approve</button>
             : <></>)}
         </div>
