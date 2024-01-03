@@ -45,10 +45,37 @@ export default function Task() {
     }
   };
 
+  const handleApprove = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    const approvedTask = await approveTask(token, {
+      task_id
+    });
+
+    if(approvedTask.error) {
+      alert(approvedTask.error);
+
+    }
+  };
+
   async function updateTaskSolver(token: string | null, task_id: TaskId) {
     console.log(task_id);
     if(token) {
       return fetch(API_BASE + "api/update-task-solver", {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task_id)
+      })
+        .then(data => data.json())
+    }
+  }
+
+  async function approveTask(token: string | null, task_id: TaskId) {
+    if(token) {
+      return fetch(API_BASE + "api/approve-task", {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + token,
@@ -114,9 +141,12 @@ export default function Task() {
           {(/*!isOwner && !*/(solver.length > 0) ? 
             <button className="bold-text full-task-claim-button" onClick={handleClaim}>Claim Task</button>
           : <></>)}
-          {(isOwner /*&& !(solver.length > 0)*/ ? 
+          {(isOwner && !solver ? 
             <div className="edit-task-button">Edit Task</div>
           : <></>)}
+          {(solver ?
+              <button className="edit-task-button" onClick={handleApprove}>Approve</button>
+            : <></>)}
         </div>
         <div className="task-price-container">
           <p>{`$${(Math.round(taskPrice * 100) / 100).toFixed(2)}`}</p>
