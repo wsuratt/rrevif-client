@@ -98,7 +98,7 @@ export default function Profile() {
         ) : ''}
         <div className="bio-container">
         <p className="review-title">Bio</p>
-        {bio.length > 0 ? (
+        {bio?.length > 0 ? (
           <p>{bio}</p>
         ): <p>No bio yet!</p>}
         </div>
