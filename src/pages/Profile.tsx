@@ -83,7 +83,6 @@ export default function Profile() {
   return (
     <div className="profile-container">
       <Navbar token={token} handleLogout={handleLogout}/>
-      <div className="profile-spacer" />
       <div className="profile-block">
         <div className="profile-head">
           <h1 className="profile-title">{`${username}'s profile`}</h1>

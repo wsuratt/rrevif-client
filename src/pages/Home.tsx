@@ -44,7 +44,6 @@ const Home = () => {
     <main>
       <div className="home-body">
         <Navbar token={token} handleLogout={handleLogout} />
-        <div className="home-spacer" />
         <div className="home-content">
           <p id="home-content-title">
             rrevif brings work to freelance developers, 

@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import './addtask.css'
 import { createQR, encodeURL } from '@solana/pay';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const API_BASE: string = "http://localhost:8080/";
 
@@ -81,17 +83,18 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
       <div>
       <p className="bold-text">Create a new task</p>
       </div>
-      <button className="x-button" onClick={switchPopup}>x</button>
+      <button className="x-button" onClick={switchPopup}><FontAwesomeIcon className="button-icon" icon={faXmark} /></button>
       <form onSubmit={handleSubmit}>
         <label className="add-task-label">
-          <input className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
+          <input required className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
         </label>
         <label className="add-task-label">
-          <input className="add-task-input" placeholder="Enter task description" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />
+          <input required className="add-task-input" placeholder="Enter task description" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />
         </label>
         <label className="add-task-label">
-          <input className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
+          <input required className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
+        <div className="qr-container">
         {qrCode && (
           <img
             src={qrCode}
@@ -99,6 +102,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
             alt="QR Code"
           />
         )}
+        </div>
         <div>
           <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>

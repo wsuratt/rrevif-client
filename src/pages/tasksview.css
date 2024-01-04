@@ -2,10 +2,6 @@ body {
   background-color: aliceblue !important;
 }
 
-.home-spacer {
-  height: 73px;
-}
-
 .tasks-container {
   display: flex;
   flex-direction: row;
