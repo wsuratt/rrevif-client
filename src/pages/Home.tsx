@@ -62,7 +62,7 @@ const Home = () => {
       </div>
       <h1 className="home-tasks-title">Featured Tasks:</h1>
       <div className="home-tasks-container">
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         (task.solver_id == null ? 
           <div className="task-block"><TaskCard task={task} token ={token} /></div>
         : <></>)
