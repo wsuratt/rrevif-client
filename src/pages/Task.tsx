@@ -23,12 +23,11 @@ interface TaskId {
 
 export default function Task() {
   const { task_id } = useParams();
-  const [poster, setPoster] = useState<any[]>([])
+  const [poster, setPoster] = useState<any[]>([]);
   const [solver, setSolver] = useState<any[]>([]);
-  const [taskName, setTaskName] = useState<string>("");
-  const [taskDesc, setTaskDesc] = useState<string>("");
-  const [taskPrice, setTaskPrice] = useState<number>(-1);
-  const [isOwner, setIsOwner] = useState<boolean>(false)
+  const [task, setTask] = useState<any[]>([]);
+  const [isPoster, setIsPoster] = useState<boolean>(false)
+  const [isSolver, setIsSolver] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
   const { token, setToken } = useToken();
   const navigate = useNavigate();
@@ -46,10 +45,37 @@ export default function Task() {
     }
   };
 
+  const handleApprove = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    const approvedTask = await approveTask(token, {
+      task_id
+    });
+
+    if(approvedTask.error) {
+      alert(approvedTask.error);
+
+    }
+  };
+
   async function updateTaskSolver(token: string | null, task_id: TaskId) {
     console.log(task_id);
     if(token) {
       return fetch(API_BASE + "api/update-task-solver", {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task_id)
+      })
+        .then(data => data.json())
+    }
+  }
+
+  async function approveTask(token: string | null, task_id: TaskId) {
+    if(token) {
+      return fetch(API_BASE + "api/approve-task", {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + token,
@@ -93,10 +119,9 @@ export default function Task() {
         console.log("Response Data", data)
         setPoster(data.poster);
         setSolver(data.solver);
-        setTaskName(data.task_name);
-        setTaskDesc(data.task_desc);
-        setTaskPrice(data.task_price);
-        setIsOwner(data.is_owner);
+        setTask(data.task)
+        setIsPoster(data.is_owner);
+        setIsSolver(data.is_solver);
         setTaskExists(true);
       })
       .catch(error => {
@@ -108,37 +133,47 @@ export default function Task() {
   return (
     <div className="full-task-container">
       <Navbar token={token} handleLogout={handleLogout}/>
-      <div className="full-task-spacer" />
       <div className="full-task-block">
         <div className="full-task-head">
-          <h1 className="full-task-title">{taskName}</h1>
-          {(!isOwner && !(solver.length > 0) ? 
+          <h1 className="full-task-title">{task[0]?.task_title}</h1>
+          {(!isPoster && !(solver.length > 0) ? 
             <button className="bold-text full-task-claim-button" onClick={handleClaim}>Claim Task</button>
           : <></>)}
-          {(isOwner && !(solver.length > 0) ? 
+          {(isPoster && !(solver.length > 0) ? 
             <div className="edit-task-button">Edit Task</div>
           : <></>)}
+          {(isPoster && solver ?
+              <button className="edit-task-button" onClick={handleApprove}>Approve</button>
+            : <></>)}
         </div>
         <div className="task-price-container">
-          <p>{`$${(Math.round(taskPrice * 100) / 100).toFixed(2)}`}</p>
+          <p>{`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}</p>
         </div>
         {(poster.length > 0 ? 
           <div className="username-cont">
             {"Posted by: "}
-            <p className="username">{poster[0].username}</p>
+            <p className="username">{poster[0]?.username}</p>
           </div>: <p>Poster not found</p>)}
         {(solver.length > 0 ? 
         <div className="username-cont">
           {"Being solved by: "} 
-          <p className="username">{solver[0].username}</p>
+          <p className="username">{solver[0]?.username}</p>
         </div>: <></>)}
         <div className="description-container">
           <p className="description-title">Description</p>
-          <p>{taskDesc}</p>
+          <p>{task[0]?.task_description}</p>
         </div>
         <div style={{"height": "20px"}}></div>
       </div>
+      {task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete) ?
         <Review token={token} reviewee={solver} review_type='solver'/>
+        : <></>
+      }
+      {task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete) ?
+        <Review token={token} reviewee={poster} review_type='poster' />
+        : <></>
+      }
+        
     </div>
   )
 }

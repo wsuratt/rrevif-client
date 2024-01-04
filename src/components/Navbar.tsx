@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import './navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMugSaucer } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faMugSaucer } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
 
 interface NavbarProps {
   token: string | null;
@@ -11,6 +12,12 @@ interface NavbarProps {
 const CLIENT_BASE: string = "/";
 
 const Navbar = ({ token, handleLogout }: NavbarProps) => {
+  const [popupActive, setPopupActive] = useState<boolean>(false);
+  
+  const switchPopup = () => {
+    setPopupActive(!popupActive)
+  }
+  
   return (
     <div className="navbar">
       <Link to={CLIENT_BASE}><h1 className='nav-logo'><FontAwesomeIcon icon={faMugSaucer} />WORK3</h1></Link>
@@ -37,7 +44,24 @@ const Navbar = ({ token, handleLogout }: NavbarProps) => {
           </div>
         )}
       </div>
-    </div>
+      <div className="spacer" />
+      {popupActive ?  
+          <div className="hamburger-menu-container">
+            <Link className="no-style" to="/tasks"><h4 className='hamburger-nav-link'>Listings</h4></Link>
+            <Link className="no-style" to="/about"><h4 className='hamburger-nav-link'>About</h4></Link>
+            {token ? (
+            <div className="hamburger-logout-container">
+              <Link to="/profile" className='hamburger-nav-link hamburger-nav-login no-style'>Profile</Link>
+              <a href={CLIENT_BASE} onClick={handleLogout} className='hamburger-nav-link hamburger-nav-login no-style hamburger-logout'>Log out</a>
+            </div>
+          ) : (
+            <div className="nav-btn-lgn">
+              <Link to="/login" className='hamburger-nav-link hamburger-nav-login no-style'>Log in</Link>
+            </div>
+          )}
+          </div> : <></>
+        }
+    </>
   )
 };
 

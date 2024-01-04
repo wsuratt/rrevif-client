@@ -83,10 +83,9 @@ export default function Profile() {
   return (
     <div className="profile-container">
       <Navbar token={token} handleLogout={handleLogout}/>
-      <div className="profile-spacer" />
       <div className="profile-block">
         <div className="profile-head">
-          <h1 className="profile-title">{`${username}'s profile`}</h1>
+          <h1 className="profile-title">{username}</h1>
           <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
           <div className="edit-profile-button">Edit Profile</div>
         </div>
@@ -97,7 +96,7 @@ export default function Profile() {
           </>
         ) : ''}
         <div className="bio-container">
-        <p className="review-title">Bio</p>
+          <p className="review-title">Bio</p>
         {bio?.length > 0 ? (
           <p>{bio}</p>
         ): <p>No bio yet!</p>}

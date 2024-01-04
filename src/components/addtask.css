@@ -17,20 +17,23 @@
 }
 
 .x-button {
-  width: 30px;
-  height: 30px;
   border: none;
   background-color: #0747A6;
   color: white;
   font-weight: 800;
   font-size: larger;
   border-radius: 4px;
-  padding-bottom: 3px;
   position: absolute;
   top: 0;
   right: 0;
   margin-right: 8px;
   margin-top: 8px;
+  padding: 4.5px 7.5px 3.5px;
+}
+
+.button-icon {
+  padding: 0;
+  margin: 0;
 }
 
 .x-button:hover {
@@ -62,7 +65,12 @@
   color: white;
   margin-bottom: 25px;
 }
+
 .add-task-submit:hover {
   background-color: #003688;
   cursor: pointer;
+}
+
+.qr-container {
+  margin: auto;
 }
