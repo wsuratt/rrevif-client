@@ -15,8 +15,10 @@
 }
 
 .task-title {
-  margin-left: 220px;
+  margin-left: 14.5%;
   margin-top: 10px;
+  display: inline-block;
+  text-wrap: nowrap;
 }
 
 .profile-dimmed {
@@ -50,6 +52,7 @@
   height: 27px;
   margin-top: 30px;
   margin-left: 30px;
+  margin-right: 25px;
   padding-top: 7px;
   color: rgb(52, 52, 52);
   border: solid 3px rgb(52, 52, 52);;
@@ -88,6 +91,7 @@
 .profile-block {
   background-color: white;
   width: 74%;
+  min-width: 575px;
   margin: auto;
   margin-top: 45px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -125,7 +129,7 @@
 }
 
 .bio-container {
-  width: 612px;
+  width: 45%;
 }
 
 .wallet-address {
