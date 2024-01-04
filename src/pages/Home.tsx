@@ -62,13 +62,11 @@ const Home = () => {
       </div>
       <h1 className="home-tasks-title">Featured Tasks:</h1>
       <div className="home-tasks-container">
-        {tasks.map((task, index) => (
-            <>
-            {(index < 5 ? 
-              <TaskCard key={index}task={task} token ={token} />
-            : <></>)}
-            </>
-        ))}
+      {tasks.map((task, index) => (
+        (task.solver_id == null ? 
+          <div className="task-block"><TaskCard task={task} token ={token} /></div>
+        : <></>)
+      ))}
       </div>
       <Link className="view-more-link" to="/tasks">View more</Link>
       <div className="home-spacer" />
