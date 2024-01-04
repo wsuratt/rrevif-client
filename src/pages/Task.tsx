@@ -108,7 +108,6 @@ export default function Task() {
   return (
     <div className="full-task-container">
       <Navbar token={token} handleLogout={handleLogout}/>
-      <div className="full-task-spacer" />
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{taskName}</h1>

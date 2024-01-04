@@ -45,7 +45,6 @@ const Tasks = () => {
   return (
     <div className="tasks-view-container">
       <Navbar token={token} handleLogout={handleLogout} />
-      <div className="home-spacer" />
       <h1 className="tasks-explore-head">Explore Tasks:</h1>
       <div className="tasks-container">
       {tasks.map((task) => (

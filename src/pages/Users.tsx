@@ -96,7 +96,6 @@ const Users = () => {
   return (
     <div className="users-container">
       <Navbar token={token} handleLogout={handleLogout} />
-      <div className='users-spacer' />
       <div className="user-table-container">
         <h1 className="table-title">Users</h1>
         <UserTable users={users} deleteUser={DeleteUser} />
