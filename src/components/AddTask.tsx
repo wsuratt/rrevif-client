@@ -1,5 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import './addtask.css'
+import { createQR, encodeURL } from '@solana/pay';
 
 const API_BASE: string = "http://localhost:8080/";
 
@@ -32,6 +33,33 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   const [price, setPrice] = useState<string | undefined>();
+  const [qrCode, setQrCode] = useState<string>();
+  const [reference, setReference] = useState<string>();
+
+  useEffect(() => {
+    generateQr();
+  }, []);
+
+  const generateQr = async () => {
+    // 1 - Send a POST request to our backend and log the response URL
+    const res = await fetch(API_BASE + 'api/payment', { method: 'POST' });
+    const { url, ref } = await res.json();
+    console.log(url)
+    // 2 - Generate a QR Code from the URL and generate a blob
+    const qr = createQR(url);
+    const qrBlob = await qr.getRawData('png');
+    if (!qrBlob) return;
+    // 3 - Convert the blob to a base64 string (using FileReader) and set the QR code state
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (typeof event.target?.result === 'string') {
+        setQrCode(event.target.result);
+      }
+    };
+    reader.readAsDataURL(qrBlob);
+    // 4 - Set the reference state
+    setReference(ref);
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -64,6 +92,13 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         <label className="add-task-label">
           <input className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
+        {qrCode && (
+          <img
+            src={qrCode}
+            style={{ position: "relative", background: "white", width: 200, height: 200 }}
+            alt="QR Code"
+          />
+        )}
         <div>
           <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>

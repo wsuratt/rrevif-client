@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+}
+  
+body{
+  background: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Helvetica Neue;
+  }
+
+h1 {
+  font-size: .1em;
+  color: #eee;
+  display: inline-block;
+}
+
+a {
+  color: white;
+}
+
+p {
+  margin-top: 1em;
+  text-align: center;
+  color: #aaa;
+}
