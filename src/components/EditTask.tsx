@@ -20,7 +20,7 @@ interface EditedTask {
 
 async function editTask(token: string | null, task_id: string, edited_task: EditedTask) {
   if(token) {
-    return fetch(API_BASE + "api/edit-task" + task_id, {
+    return fetch(API_BASE + "api/task/edit" + task_id, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -40,11 +40,10 @@ export default function EditTask({ token, setPopup, task }: EditTaskProps) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setPopup(false);
-
     const editedTask = await editTask(token, task[0]?.id, {
       title, 
       description, 
-      price
+      price,
     });
     if(editedTask.error) {
       alert(editedTask.error);
