@@ -9,6 +9,7 @@ interface ReviewProps {
   token: string | null;
   reviewee: any[];
   review_type: string;
+  task_id: string | undefined;
 }
 
 interface newReview {
@@ -16,6 +17,7 @@ interface newReview {
   rating: number;
   rating_desc: string;
   review_type: string;
+  task_id: string | undefined;
 }
 
 async function addReview(token: string | null, new_review: newReview) {
@@ -32,7 +34,7 @@ async function addReview(token: string | null, new_review: newReview) {
   }
 }
 
-export default function Review({token, reviewee, review_type}: ReviewProps) {
+export default function Review({token, reviewee, review_type, task_id}: ReviewProps) {
   const [reviewee_id, setRevieweeId] = useState<string>(reviewee[0]?.user_id);
   const [rating, setRating] = useState<number>(0);
   const [rating_desc, setRatingDesc] = useState<string>("");
@@ -52,25 +54,29 @@ export default function Review({token, reviewee, review_type}: ReviewProps) {
       reviewee_id: reviewee[0].user_id,
       rating,
       rating_desc,
-      review_type
+      review_type,
+      task_id
     })
     
   }
 
   return(
-    <div className="review-wrapper">
-      <h1>{`Submit a review for ${reviewee[0]?.username}`}</h1>
-      <form onSubmit={handleSubmit}>
-        <label className="review-label stars">
-          <StarRating onChange={(e) => setRating(e)}/>
-        </label>
-        <label className="review-label">
-          <input maxLength={250} className="review-input review-desc" placeholder='Please add an explanation for your review' onChange={(e: ChangeEvent<HTMLInputElement>) => setRatingDesc(e.target.value)}/>
-        </label>
-        <div>
-          <button className="add-review-submit" type="submit">Submit Review</button>
-        </div>
-      </form>
-    </div>
+    <>
+      <div className="profile-dimmed"></div>
+      <div className="review-wrapper">
+        <h1>{`Submit a review for ${reviewee[0]?.username}`}</h1>
+        <form onSubmit={handleSubmit}>
+          <label className="review-label stars">
+            <StarRating onChange={(e) => setRating(e)}/>
+          </label>
+          <label className="review-label">
+            <input maxLength={250} className="review-input review-desc" placeholder='Please add an explanation for your review' onChange={(e: ChangeEvent<HTMLInputElement>) => setRatingDesc(e.target.value)}/>
+          </label>
+          <div>
+            <button className="add-review-submit" type="submit">Submit Review</button>
+          </div>
+        </form>
+      </div>
+    </>
   )
 }

@@ -89,7 +89,7 @@ export default function Task() {
 
   useEffect(() => {
     GetTaskInfo();
-  }, [token]);
+  });
 
   if (!token) {
     return <Login setToken={(token) => setToken({ token })} />;
@@ -137,13 +137,13 @@ export default function Task() {
         <div className="full-task-head">
           <h1 className="full-task-title">{task[0]?.task_title}</h1>
           {(!isPoster && !(solver.length > 0) ? 
-            <button className="bold-text full-task-claim-button" onClick={handleClaim}>Claim Task</button>
+            <button className="bold-text full-task-claim-button" onClick={handleClaim}>Accept Task</button>
           : <></>)}
           {(isPoster && !(solver.length > 0) ? 
             <div className="edit-task-button">Edit Task</div>
           : <></>)}
-          {(isPoster && solver ?
-              <button className="edit-task-button" onClick={handleApprove}>Approve</button>
+          {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
+              <button className="approve-task-button" onClick={handleApprove}>Approve Solution</button>
             : <></>)}
         </div>
         <div className="task-price-container">
@@ -151,13 +151,17 @@ export default function Task() {
         </div>
         {(poster.length > 0 ? 
           <div className="username-cont">
-            {"Posted by: "}
+            {"Poster: "}
             <p className="username">{poster[0]?.username}</p>
+            {(isPoster || isSolver ? 
+            <p className="username email">{`: ${poster[0]?.email}`}</p>: <></>)}
           </div>: <p>Poster not found</p>)}
         {(solver.length > 0 ? 
         <div className="username-cont">
-          {"Being solved by: "} 
+          {"Solver: "} 
           <p className="username">{solver[0]?.username}</p>
+          {(isPoster || isSolver ? 
+            <p className="username email">{`: ${solver[0]?.email}`}</p>: <></>)}
         </div>: <></>)}
         <div className="description-container">
           <p className="description-title">Description</p>
@@ -166,11 +170,11 @@ export default function Task() {
         <div style={{"height": "20px"}}></div>
       </div>
       {task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete) ?
-        <Review token={token} reviewee={solver} review_type='solver'/>
+        <Review token={token} reviewee={solver} review_type='solver' task_id={task_id}/>
         : <></>
       }
       {task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete) ?
-        <Review token={token} reviewee={poster} review_type='poster' />
+        <Review token={token} reviewee={poster} review_type='poster' task_id={task_id} />
         : <></>
       }
         
