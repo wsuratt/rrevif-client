@@ -71,6 +71,34 @@
   cursor: pointer;
 }
 
+.add-task-payment {
+  background-color: #0747A6;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 3px;
+  width: 320px;
+  height: 40px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.add-task-payment:hover {
+  background-color: #003688;
+  cursor: pointer;
+}
+
+.payment-verified-text {
+  color: green;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.payment-not-verified-text {
+  color: red;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
 .qr-container {
   margin: auto;
 }

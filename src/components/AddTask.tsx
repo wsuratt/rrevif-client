@@ -37,6 +37,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [price, setPrice] = useState<string | undefined>();
   const [qrCode, setQrCode] = useState<string>();
   const [reference, setReference] = useState<string>();
+  const [paymentVerified, setPaymentVerified] = useState<boolean>();
 
   useEffect(() => {
     generateQr();
@@ -78,6 +79,21 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
     }
   };
 
+  const verifyPayment = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    const res = await fetch(API_BASE + 'api/payment?reference=' + reference, { method: 'GET' });
+    const isVerified = await res.json();
+
+    console.log(isVerified);
+    if(isVerified.status === 'verified') {
+      setPaymentVerified(true);
+    }
+    else if(isVerified.error) {
+      alert(isVerified.error);
+    }
+  };
+
   return (
     <div className="add-task-wrapper">
       <div>
@@ -95,6 +111,11 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
           <input required className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
         <div className="qr-container">
+          {paymentVerified ? (
+            <p className="payment-verified-text">Verified</p>
+          ) : (
+            <p className="payment-not-verified-text">Not Verified</p>
+          )}
         {qrCode && (
           <img
             src={qrCode}
@@ -104,6 +125,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         )}
         </div>
         <div>
+          <button className="add-task-payment"><p className="bold-text" onClick={verifyPayment}>Verify Payment</p></button>
           <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>
       </form>
