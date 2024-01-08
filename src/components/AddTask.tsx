@@ -15,6 +15,7 @@ interface NewTask {
   title: string | undefined;
   description: string | undefined;
   price: string | undefined;
+  reference: string | undefined;
 }
 
 async function addTask(token: string | null, new_task: NewTask) {
@@ -71,7 +72,8 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
     const addedTask = await addTask(token, {
       title,
       description,
-      price
+      price,
+      reference
     });
 
     if(addedTask.error) {
@@ -125,7 +127,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         )}
         </div>
         <div>
-          <button className="add-task-payment"><p className="bold-text" onClick={verifyPayment}>Verify Payment</p></button>
+          <button className="add-task-payment" onClick={verifyPayment}><p className="bold-text">Verify Payment</p></button>
           <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
         </div>
       </form>
