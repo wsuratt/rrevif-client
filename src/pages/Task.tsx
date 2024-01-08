@@ -151,13 +151,17 @@ export default function Task() {
         </div>
         {(poster.length > 0 ? 
           <div className="username-cont">
-            {"Posted by: "}
+            {"Poster: "}
             <p className="username">{poster[0]?.username}</p>
+            {(isPoster || isSolver ? 
+            <p className="username email">{`: ${poster[0]?.email}`}</p>: <></>)}
           </div>: <p>Poster not found</p>)}
         {(solver.length > 0 ? 
         <div className="username-cont">
-          {"Being solved by: "} 
+          {"Solver: "} 
           <p className="username">{solver[0]?.username}</p>
+          {(isPoster || isSolver ? 
+            <p className="username email">{`: ${solver[0]?.email}`}</p>: <></>)}
         </div>: <></>)}
         <div className="description-container">
           <p className="description-title">Description</p>
