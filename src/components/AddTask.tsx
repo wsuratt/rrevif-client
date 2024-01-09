@@ -15,6 +15,7 @@ interface NewTask {
   title: string | undefined;
   description: string | undefined;
   price: string | undefined;
+  reference: string | undefined;
 }
 
 async function addTask(token: string | null, new_task: NewTask) {
@@ -31,12 +32,17 @@ async function addTask(token: string | null, new_task: NewTask) {
   }
 }
 
+function timeout(delay: number) {
+  return new Promise( res => setTimeout(res, delay) );
+}
+
 export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   const [price, setPrice] = useState<string | undefined>();
   const [qrCode, setQrCode] = useState<string>();
   const [reference, setReference] = useState<string>();
+  const [paymentVerified, setPaymentVerified] = useState<boolean>();
 
   useEffect(() => {
     generateQr();
@@ -65,16 +71,20 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    switchPopup();
     
     const addedTask = await addTask(token, {
       title,
       description,
-      price
+      price,
+      reference
     });
 
     if(addedTask.error) {
       alert(addedTask.error);
+    } else {
+      setPaymentVerified(true);
+      await timeout(2000);
+      switchPopup();
     }
   };
 
@@ -84,7 +94,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
       <p className="bold-text">Create a new task</p>
       </div>
       <button className="x-button" onClick={switchPopup}><FontAwesomeIcon className="button-icon" icon={faXmark} /></button>
-      <form onSubmit={handleSubmit}>
+      <form>
         <label className="add-task-label">
           <input required className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
         </label>
@@ -95,6 +105,11 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
           <input required className="add-task-input" placeholder="Enter task price" type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value)} />
         </label>
         <div className="qr-container">
+          {paymentVerified ? (
+            <p className="payment-verified-text">Verified</p>
+          ) : (
+            <p className="payment-not-verified-text">Not Verified</p>
+          )}
         {qrCode && (
           <img
             src={qrCode}
@@ -104,7 +119,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         )}
         </div>
         <div>
-          <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
+          <button className="add-task-submit" onClick={handleSubmit}><p className="bold-text">Verify Payment and Continue</p></button>
         </div>
       </form>
     </div>
