@@ -32,6 +32,10 @@ async function addTask(token: string | null, new_task: NewTask) {
   }
 }
 
+function timeout(delay: number) {
+  return new Promise( res => setTimeout(res, delay) );
+}
+
 export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
@@ -78,24 +82,11 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
     if(addedTask.error) {
       alert(addedTask.error);
     } else {
+      setPaymentVerified(true);
+      await timeout(2000);
       switchPopup();
     }
   };
-
-  // const verifyPayment = async (e: FormEvent) => {
-  //   e.preventDefault();
-    
-  //   const res = await fetch(API_BASE + 'api/payment?reference=' + reference, { method: 'GET' });
-  //   const isVerified = await res.json();
-
-  //   console.log(isVerified);
-  //   if(isVerified.status === 'verified') {
-  //     setPaymentVerified(true);
-  //   }
-  //   else if(isVerified.error) {
-  //     alert(isVerified.error);
-  //   }
-  // };
 
   return (
     <div className="add-task-wrapper">
