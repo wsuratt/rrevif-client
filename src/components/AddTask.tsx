@@ -67,7 +67,6 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    switchPopup();
     
     const addedTask = await addTask(token, {
       title,
@@ -78,23 +77,25 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
 
     if(addedTask.error) {
       alert(addedTask.error);
+    } else {
+      switchPopup();
     }
   };
 
-  const verifyPayment = async (e: FormEvent) => {
-    e.preventDefault();
+  // const verifyPayment = async (e: FormEvent) => {
+  //   e.preventDefault();
     
-    const res = await fetch(API_BASE + 'api/payment?reference=' + reference, { method: 'GET' });
-    const isVerified = await res.json();
+  //   const res = await fetch(API_BASE + 'api/payment?reference=' + reference, { method: 'GET' });
+  //   const isVerified = await res.json();
 
-    console.log(isVerified);
-    if(isVerified.status === 'verified') {
-      setPaymentVerified(true);
-    }
-    else if(isVerified.error) {
-      alert(isVerified.error);
-    }
-  };
+  //   console.log(isVerified);
+  //   if(isVerified.status === 'verified') {
+  //     setPaymentVerified(true);
+  //   }
+  //   else if(isVerified.error) {
+  //     alert(isVerified.error);
+  //   }
+  // };
 
   return (
     <div className="add-task-wrapper">
@@ -102,7 +103,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
       <p className="bold-text">Create a new task</p>
       </div>
       <button className="x-button" onClick={switchPopup}><FontAwesomeIcon className="button-icon" icon={faXmark} /></button>
-      <form onSubmit={handleSubmit}>
+      <form>
         <label className="add-task-label">
           <input required className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
         </label>
@@ -127,8 +128,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
         )}
         </div>
         <div>
-          <button className="add-task-payment" onClick={verifyPayment}><p className="bold-text">Verify Payment</p></button>
-          <button className="add-task-submit" type="submit"><p className="bold-text">Continue</p></button>
+          <button className="add-task-submit" onClick={handleSubmit}><p className="bold-text">Verify Payment and Continue</p></button>
         </div>
       </form>
     </div>
