@@ -167,6 +167,10 @@ export default function Task() {
           <p className="description-title">Description</p>
           <p>{task[0]?.task_description}</p>
         </div>
+        <div className="description-container">
+          <p className="description-title">AI Generation</p>
+          <p>{task[0]?.task_generation}</p>
+        </div>
         <div style={{"height": "20px"}}></div>
       </div>
       {task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete) ?
