@@ -67,3 +67,10 @@ Link {
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
+
+.task-generation-input {
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 2px solid lightgrey;
+}
