@@ -13,7 +13,7 @@ export default function useToken(): UseTokenResult {
   const getToken = (): string | null => {
     const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString || 'null');
-    return userToken?.token?.token || null;
+    return userToken?.token || null;
   };
 
   const [token, setToken] = useState<string | null>(getToken());

@@ -14,7 +14,6 @@ interface TaskId {
 }
 
 async function updateTaskSolver(token: string | null, task_id: TaskId) {
-  console.log(task_id);
   if(token) {
     return fetch(API_BASE + "api/update-task-solver", {
       method: 'POST',

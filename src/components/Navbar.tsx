@@ -3,17 +3,19 @@ import './navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faMugSaucer } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
-
-interface NavbarProps {
-  token: string | null;
-  handleLogout: () => void;
-}
+import useToken from '../utils/useToken';
 
 const CLIENT_BASE: string = "/";
 
-const Navbar = ({ token, handleLogout }: NavbarProps) => {
+const Navbar = () => {
   const [popupActive, setPopupActive] = useState<boolean>(false);
+  const { token, setToken } = useToken();
   
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken({token: null});
+  };
+
   const switchPopup = () => {
     setPopupActive(!popupActive)
   }

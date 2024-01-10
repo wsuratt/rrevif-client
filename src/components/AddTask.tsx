@@ -54,7 +54,6 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
     // 1 - Send a POST request to our backend and log the response URL
     const res = await fetch(API_BASE + 'api/payment', { method: 'POST' });
     const { url, ref } = await res.json();
-    console.log(url)
     // 2 - Generate a QR Code from the URL and generate a blob
     const qr = createQR(url);
     const qrBlob = await qr.getRawData('png');

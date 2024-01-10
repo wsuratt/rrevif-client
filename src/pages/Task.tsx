@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import Review from '../components/Review';
+import EditTask from '../components/EditTask';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -29,6 +30,7 @@ export default function Task() {
   const [isPoster, setIsPoster] = useState<boolean>(false)
   const [isSolver, setIsSolver] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
+  const [ popup, setPopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
 
@@ -92,7 +94,7 @@ export default function Task() {
   });
 
   if (!token) {
-    return <Login setToken={(token) => setToken({ token })} />;
+    return <Login />;
   }
 
   const handleLogout = () => {
@@ -132,7 +134,7 @@ export default function Task() {
 
   return (
     <div className="full-task-container">
-      <Navbar token={token} handleLogout={handleLogout}/>
+      <Navbar />
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{task[0]?.task_title}</h1>
@@ -140,7 +142,7 @@ export default function Task() {
             <button className="bold-text full-task-claim-button" onClick={handleClaim}>Accept Task</button>
           : <></>)}
           {(isPoster && !(solver.length > 0) ? 
-            <div className="edit-task-button">Edit Task</div>
+            <div className="edit-task-button" onClick={e => setPopup(true)}>Edit Task</div>
           : <></>)}
           {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
               <button className="approve-task-button" onClick={handleApprove}>Approve Solution</button>
@@ -181,7 +183,9 @@ export default function Task() {
         <Review token={token} reviewee={poster} review_type='poster' task_id={task_id} />
         : <></>
       }
-        
+      {popup ? 
+        <EditTask token={token} setPopup={setPopup} task={task} />
+      : <></>}
     </div>
   )
 }
