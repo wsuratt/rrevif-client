@@ -77,12 +77,12 @@ export default function Profile() {
   }
 
   if (!token) {
-    return <Login setToken={(token) => setToken({ token })} />;
+    return <Login />;
   }
 
   return (
     <div className="profile-container">
-      <Navbar token={token} handleLogout={handleLogout}/>
+      <Navbar />
       <div className="profile-block">
         <div className="profile-head">
           <h1 className="profile-title">{username}</h1>
