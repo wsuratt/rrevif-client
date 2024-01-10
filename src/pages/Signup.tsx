@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './login.css'
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../utils/useToken';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const SERVER_BASE: string = "localhost:8080/";
@@ -25,15 +26,12 @@ async function signupUser(credentials: Credentials) {
     .then(data => data.json());
 }
 
-interface LoginProps {
-  setToken: (token: string) => void;
-}
-
-export default function Signup({ setToken }: LoginProps) {
+export default function Signup() {
   const [username, setUserName] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
   const [wallet_address, setWallet] = useState<string | undefined>();
+  const { token, setToken } = useToken();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -90,7 +88,3 @@ export default function Signup({ setToken }: LoginProps) {
     </div>
   );
 }
-
-Signup.propTypes = {
-  setToken: PropTypes.func.isRequired
-};

@@ -13,10 +13,6 @@ const Home = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const { token, setToken } = useToken();
   
-  // if (!token) {
-  //   return <Login setToken={(token) => setToken({ token })} />;
-  // }
-  
   useEffect(() => {
     GetTasks();
   }, [])
@@ -35,15 +31,10 @@ const Home = () => {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken({token: null});
-  };
-
   return (
     <main>
       <div className="home-body">
-        <Navbar token={token} handleLogout={handleLogout} />
+        <Navbar />
         <div className="home-content">
           <p id="home-content-title">
             rrevif brings work to freelance developers, 

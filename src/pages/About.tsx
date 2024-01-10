@@ -16,7 +16,7 @@ const About = () => {
 
   return (
     <div>
-      <Navbar token={token} handleLogout={handleLogout} />
+      <Navbar />
     </div>
   )
 }

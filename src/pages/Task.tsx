@@ -94,7 +94,7 @@ export default function Task() {
   });
 
   if (!token) {
-    return <Login setToken={(token) => setToken({ token })} />;
+    return <Login />;
   }
 
   const handleLogout = () => {
@@ -134,7 +134,7 @@ export default function Task() {
 
   return (
     <div className="full-task-container">
-      <Navbar token={token} handleLogout={handleLogout}/>
+      <Navbar />
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{task[0]?.task_title}</h1>
