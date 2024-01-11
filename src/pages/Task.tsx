@@ -154,14 +154,14 @@ export default function Task() {
         {(poster.length > 0 ? 
           <div className="username-cont">
             {"Poster: "}
-            <p className="username">{poster[0]?.username}</p>
+            <Link to={'/profile/' + poster[0]?.username}><p className="username">{poster[0]?.username}</p></Link>
             {(isPoster || isSolver ? 
             <p className="username email">{`: ${poster[0]?.email}`}</p>: <></>)}
           </div>: <p>Poster not found</p>)}
         {(solver.length > 0 ? 
         <div className="username-cont">
           {"Solver: "} 
-          <p className="username">{solver[0]?.username}</p>
+          <Link to={'/profile/' + solver[0]?.username}><p className="username">{solver[0]?.username}</p></Link>
           {(isPoster || isSolver ? 
             <p className="username email">{`: ${solver[0]?.email}`}</p>: <></>)}
         </div>: <></>)}

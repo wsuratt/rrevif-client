@@ -2,15 +2,44 @@ import { Link } from 'react-router-dom';
 import './navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faMugSaucer } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useToken from '../utils/useToken';
 
 const CLIENT_BASE: string = "/";
+const API_BASE: string = "http://localhost:8080/";
 
 const Navbar = () => {
   const [popupActive, setPopupActive] = useState<boolean>(false);
+  const [username, setUserName] = useState<string>("");
   const { token, setToken } = useToken();
   
+  useEffect(() => {
+    GetUserInfo();
+  });
+
+  const GetUserInfo = () => {
+    // refactor to use User objects
+    if (token) {
+      fetch(API_BASE + "api/nav/", {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status === 403) {
+            handleLogout();
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log(data)
+          setUserName(data.username);
+        })
+        .catch(err => console.error("Error: ", err))
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken({token: null});
@@ -33,7 +62,7 @@ const Navbar = () => {
         <div className="nav-btn-lgn">
           {token ? (
             <>
-              <Link to="/profile" className='nav-link nav-login no-style'>Profile</Link>
+              <Link to={"/profile/" + username} className='nav-link nav-login no-style'>Profile</Link>
               <a href={CLIENT_BASE} onClick={handleLogout} className='nav-link nav-login no-style logout'>Log out</a>
             </>
           ) : (
@@ -58,7 +87,7 @@ const Navbar = () => {
             <Link className="no-style" to="/about"><h4 className='hamburger-nav-link'>About</h4></Link>
             {token ? (
             <div className="hamburger-logout-container">
-              <Link to="/profile" className='hamburger-nav-link hamburger-nav-login no-style'>Profile</Link>
+              <Link to={"/profile/" + username} className='hamburger-nav-link hamburger-nav-login no-style'>Profile</Link>
               <a href={CLIENT_BASE} onClick={handleLogout} className='hamburger-nav-link hamburger-nav-login no-style hamburger-logout'>Log out</a>
             </div>
           ) : (
