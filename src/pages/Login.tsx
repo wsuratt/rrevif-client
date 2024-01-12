@@ -51,10 +51,10 @@ export default function Login() {
       <p className="bold-text">Log in to continue</p>
       <form onSubmit={handleSubmit}>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your username" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} />
+          <input className="login-input" placeholder="Enter your username" type="text" required onChange={(e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)} />
         </label>
         <label className="login-label">
-          <input className="login-input" placeholder="Enter your password" type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+          <input className="login-input" placeholder="Enter your password" type="password" required onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
         </label>
         <div>
           <button className="login-submit" type="submit"><p className="bold-text">Continue</p></button>
