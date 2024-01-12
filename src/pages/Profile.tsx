@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './profile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useToken from "../utils/useToken";
 import Task from './Task';
@@ -51,6 +51,18 @@ export default function Profile() {
 
   const switchPopup = () => {
     setPopupActive(!popupActive);
+  }
+
+
+  const DeleteLink = (link_id: string) => {
+    if(token) {
+      fetch(API_BASE +  "api/link/delete" + link_id, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    }
   }
 
   const GetUserInfo = () => {
@@ -137,7 +149,10 @@ export default function Profile() {
           <p className="review-title">Links</p>
           <div className="link-container">
               {links.map((link, i)=> (
-                <a key={i} href={`https://${link.link_url}`} target="_blank" className="profile-link-display">{link.link_display}</a>
+                <div className="link-inner-container">
+                  <a key={i} href={`https://${link.link_url}`} target="_blank" className="profile-link-display">{link.link_display}</a>
+                  {isUser ? <FontAwesomeIcon onClick={e => DeleteLink(link.link_id)} icon={faXmark} className="font-x" />: <></>}
+                </div>
               ))}
           </div>
         </div>

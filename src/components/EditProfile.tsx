@@ -20,16 +20,15 @@ interface User {
 }
 
 interface EditedProfile {
-  username: string;
   wallet_address: string;
   bio: string;
   linkUrl: string,
   linkdisplay: string
 }
 
-async function editProfile(token: string | null, edited_profile: EditedProfile) {
+async function editProfile(token: string | null, username: string, edited_profile: EditedProfile) {
   if(token) {
-    return fetch(API_BASE + "api/profile/edit", {
+    return fetch(API_BASE + "api/profile/edit" + username, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -51,8 +50,7 @@ export default function EditProfile({ token, setEditPopup, user }: EditProfilePr
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setEditPopup(false);
-    const editedProfile = await editProfile(token, {
-      username, 
+    const editedProfile = await editProfile(token, username, {
       wallet_address, 
       bio,
       linkUrl,
@@ -83,11 +81,11 @@ export default function EditProfile({ token, setEditPopup, user }: EditProfilePr
           <label className='add-task-label'>
             <div className="link-input-container">
               <p className="link-text">Link URL:</p>
-              <input required className="link-input url" placeholder='Enter link url' type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setLinkUrl(e.target.value)}/>
+              <input className="link-input url" placeholder='Enter link url' type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setLinkUrl(e.target.value)}/>
             </div>
             <div className="link-input-container">
               <p className="link-text">Link display:</p>
-              <input required className="link-input display" placeholder='Enter link display' type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setLinkDisplay(e.target.value)}/>
+              <input className="link-input display" placeholder='Enter link display' type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setLinkDisplay(e.target.value)}/>
             </div>
           </label>
           <div>
