@@ -96,3 +96,53 @@
 .description-title {
   font-weight: 700;
 }
+
+.approve-container {
+  width: 475px;
+  min-width: 475px;
+  margin: auto;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 25px;
+  background-color: white !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 4px;
+  position: fixed;
+  z-index: 13;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.cancel-approve {
+  margin-left: 10px;
+}
+
+.approve-confirm-text {
+  width: 400px;
+  min-width: 400px;
+  margin: auto;
+}
+
+.approve-task-button-inner {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.profile-dimmed {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51,51,51,0.7);
+  z-index: 9;
+}

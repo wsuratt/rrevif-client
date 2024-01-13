@@ -105,9 +105,11 @@ export default function Profile() {
       <div className="profile-block">
         <div className="profile-head">
           <h1 className="profile-title">{username}</h1>
-          <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
           { isUser ? 
+          <>
+            <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
             <div className="edit-profile-button" onClick={e => setEditPopup(true)}>Edit Profile</div>
+          </>
           : <></>}
         </div>
         {popupActive ? (

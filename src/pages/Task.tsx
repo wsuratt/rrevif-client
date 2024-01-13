@@ -31,6 +31,7 @@ export default function Task() {
   const [isSolver, setIsSolver] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
   const [ popup, setPopup ] = useState<boolean>(false);
+  const [ approve_popup, setApprovePopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
 
@@ -48,6 +49,7 @@ export default function Task() {
   };
 
   const handleApprove = async (e: FormEvent) => {
+    setApprovePopup(false);
     e.preventDefault();
     
     const approvedTask = await approveTask(token, {
@@ -56,7 +58,6 @@ export default function Task() {
 
     if(approvedTask.error) {
       alert(approvedTask.error);
-
     }
   };
 
@@ -145,7 +146,7 @@ export default function Task() {
             <div className="edit-task-button" onClick={e => setPopup(true)}>Edit Task</div>
           : <></>)}
           {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
-              <button className="approve-task-button" onClick={handleApprove}>Approve Solution</button>
+              <button className="approve-task-button" onClick={e => setApprovePopup(true)}>Approve Solution</button>
             : <></>)}
         </div>
         <div className="task-price-container">
@@ -182,6 +183,25 @@ export default function Task() {
       {popup ? 
         <EditTask token={token} setPopup={setPopup} task={task} />
       : <></>}
+      {approve_popup ? 
+      <>
+        <div className="profile-dimmed"></div>
+        <div className="approve-container">
+          <div className="approve-confirm-text">
+            Are you sure you would like to accept this solution? 
+            If you approve this task, you will be accepting this 
+            project as complete, and the payment to the solver 
+            will be processed.  Only approve the payment and solution
+            if both you and the solver have come to a consensus.
+          </div>
+          <div className="buttons-container">
+            <button className="approve-task-button approve-task-button-inner" onClick={handleApprove}>Approve Solution</button>
+            <div className="cancel-approve edit-task-button" onClick={e => setApprovePopup(false)}>Cancel</div>
+          </div>
+        </div>
+      </>: 
+      <></>
+      }
     </div>
   )
 }
