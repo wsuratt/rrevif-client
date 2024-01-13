@@ -33,6 +33,7 @@ export default function Task() {
   const [ popup, setPopup ] = useState<boolean>(false);
   const [ approve_popup, setApprovePopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
+  const [resetEffect, setResetEffect] = useState<boolean>(false)
   const navigate = useNavigate();
 
   const handleClaim = async (e: FormEvent) => {
@@ -59,6 +60,7 @@ export default function Task() {
     if(approvedTask.error) {
       alert(approvedTask.error);
     }
+    setResetEffect(!resetEffect);
   };
 
   async function updateTaskSolver(token: string | null, task_id: TaskId) {
@@ -74,6 +76,7 @@ export default function Task() {
       })
         .then(data => data.json())
     }
+    setResetEffect(!resetEffect);
   }
 
   async function approveTask(token: string | null, task_id: TaskId) {
@@ -88,11 +91,12 @@ export default function Task() {
       })
         .then(data => data.json())
     }
+    setResetEffect(!resetEffect);
   }
 
   useEffect(() => {
     GetTaskInfo();
-  });
+  }, [resetEffect]);
 
   if (!token) {
     return <Login />;
@@ -119,7 +123,6 @@ export default function Task() {
         return res.json();
       })
       .then(data => {
-        console.log("Response Data", data)
         setPoster(data.poster);
         setSolver(data.solver);
         setTask(data.task)
@@ -150,7 +153,10 @@ export default function Task() {
             : <></>)}
         </div>
         <div className="task-price-container">
-          <p>{`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}</p>
+          {`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}
+        </div>
+        <div className="task-timestamp-container">
+          Posted: <p className="username">{`${(new Date(task[0]?.task_timestamp))?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}</p>
         </div>
         {(poster.length > 0 ? 
           <div className="username-cont">

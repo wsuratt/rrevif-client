@@ -21,7 +21,7 @@ const Tasks = () => {
 
   const GetTasks = () => {
     if(token) {
-      fetch(API_BASE + "api/tasks/", {
+      fetch(API_BASE + "api/tasks", {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + token

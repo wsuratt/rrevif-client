@@ -17,6 +17,13 @@ Link {
   display: inline-block;
 }
 
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .task-claim-button{
   width: 90%;
   height: 50px;
@@ -47,6 +54,11 @@ Link {
   font-size: large;
   margin-top: 7.5px;
   padding-left: 7.5px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .task-price {
@@ -59,11 +71,30 @@ Link {
 
 
 .task-description {
-  overflow: hidden;
   padding-left: 7.5px;
   padding-right: 7.5px;
-  text-overflow: ellipsis;
+  height: 140px;
+}
+
+.desc-holder {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.2em * 5); /* You can adjust this value based on your font size */
+  line-height: 1.2em;
+}
+
+.task-footer {
+  display: flex;
+  flex-direction: row;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  padding-top: 7.5px;
+  font-weight: 600;
+}
+
+.task-timestamp {
+  margin-left: auto;
 }
