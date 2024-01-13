@@ -14,6 +14,7 @@ const Tasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
+  const [resetEffect, setResetEffect] = useState<boolean>(false)
   
   useEffect(() => {
     GetTasks();

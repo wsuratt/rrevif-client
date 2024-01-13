@@ -33,6 +33,7 @@ export default function Profile() {
   const { token, setToken } = useToken();
   const [popupActive, setPopupActive] = useState(false);
   const [ edit_popup, setEditPopup ] = useState<boolean>(false);
+  const [resetEffect, setResetEffect] = useState<boolean>(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function Profile() {
     if(username != undefined) {
         setName(username)
       }
-  });
+  }, [resetEffect]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
