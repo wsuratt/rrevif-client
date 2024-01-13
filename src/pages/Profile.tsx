@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Navbar from '../components/Navbar';
 import './profile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { Link, useNavigate } from 'react-router-dom';
+import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useToken from "../utils/useToken";
 import Task from './Task';
 import TaskCard from '../components/TaskCard';
 import AddTask from '../components/AddTask';
 import Login from './Login';
+import EditProfile from '../components/EditProfile';
 
 const CLIENT_BASE: string = "localhost:3000/";
 const API_BASE: string = "http://localhost:8080/";
@@ -19,21 +20,27 @@ interface LoginProps {
 }
 
 export default function Profile() {
-  const [username, setUserName] = useState<string | undefined>();
+  const { username } = useParams<string>();
+  const [name, setName] = useState<string>("")
   const [accepted, setAccepted] = useState<any[]>([]);
   const [posted, setPosted] = useState<any[]>([]);
   const [posterRating, setPosterRating] = useState<any[]>([]);
   const [solverRating, setSolverRating] = useState<any[]>([]);
   const [links, setLinks] = useState<any[]>([]);
   const [bio, setBio] = useState<string>("");
-  const [walletAddress, setWalletAddress] = useState<string | undefined>();
+  const [walletAddress, setWalletAddress] = useState<string>("");
+  const [isUser, setIsUser] = useState<boolean>(false);
   const { token, setToken } = useToken();
-  const [popupActive, setPopupActive] = useState(false)
+  const [popupActive, setPopupActive] = useState(false);
+  const [ edit_popup, setEditPopup ] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     GetUserInfo();
-  }, [token]);
+    if(username != undefined) {
+        setName(username)
+      }
+  });
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -46,10 +53,22 @@ export default function Profile() {
     setPopupActive(!popupActive);
   }
 
+
+  const DeleteLink = (link_id: string) => {
+    if(token) {
+      fetch(API_BASE +  "api/link/delete" + link_id, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    }
+  }
+
   const GetUserInfo = () => {
     // refactor to use User objects
     if (token) {
-      fetch(API_BASE + "api/profile/", {
+      fetch(API_BASE + "api/profile" + username, {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + token
@@ -63,7 +82,6 @@ export default function Profile() {
         })
         .then(data => {
           console.log(data)
-          setUserName(data.username);
           setPosted([...data.postedTasks]);
           setAccepted([...data.tasksToSolve]);
           setPosterRating([...data.posterRating]);
@@ -71,6 +89,7 @@ export default function Profile() {
           setWalletAddress(data.walletAddress);
           setBio(data.bio);
           setLinks([...data.links]);
+          setIsUser(data.isUser)
         })
         .catch(err => console.error("Error: ", err))
     }
@@ -87,7 +106,9 @@ export default function Profile() {
         <div className="profile-head">
           <h1 className="profile-title">{username}</h1>
           <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
-          <div className="edit-profile-button">Edit Profile</div>
+          { isUser ? 
+            <div className="edit-profile-button" onClick={e => setEditPopup(true)}>Edit Profile</div>
+          : <></>}
         </div>
         {popupActive ? (
           <>
@@ -128,7 +149,10 @@ export default function Profile() {
           <p className="review-title">Links</p>
           <div className="link-container">
               {links.map((link, i)=> (
-                <a key={i} href={`https://${link.link_url}`} target="_blank" className="profile-link-display">{link.link_display}</a>
+                <div className="link-inner-container">
+                  <a key={i} href={`https://${link.link_url}`} target="_blank" className="profile-link-display">{link.link_display}</a>
+                  {isUser ? <FontAwesomeIcon onClick={e => DeleteLink(link.link_id)} icon={faXmark} className="font-x" />: <></>}
+                </div>
               ))}
           </div>
         </div>
@@ -140,15 +164,15 @@ export default function Profile() {
       {posted.map((task, index) => (
         <TaskCard token={token} key={index} task={task} />
       ))}
-    </div>: <h3 className='task-title'>You have not posted any tasks.</h3>)}
+    </div>: <h3 className='task-title'>This user has not posted any tasks.</h3>)}
       <h1 className='task-title'>Accepted Tasks:</h1>
       {(accepted?.length > 0 ? 
       <div className="accepted-task-container">
       {accepted.map((task, index) => (
         <TaskCard token={token} key={index} task={task} />
       ))}
-    </div>: <h3 className='task-title'>You have not accepted any tasks.</h3>)}
-      
+    </div>: <h3 className='task-title'>This user has not accepted any tasks.</h3>)}
+    {edit_popup ? <EditProfile token={token} setEditPopup={setEditPopup} user={{username: name, wallet_address: walletAddress, bio: bio, links: links}} />: <></>}
     </div>
   )
 }

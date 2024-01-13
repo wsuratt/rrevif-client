@@ -21,6 +21,12 @@
   text-wrap: nowrap;
 }
 
+.font-x {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
 .profile-dimmed {
   position: fixed;
   width: 100%;
@@ -64,10 +70,15 @@
 .link-container {
   display: flex;
   flex-direction: column;
+  justify-content: baseline;
+}
+
+.link-inner-container {
+  margin-bottom: 10px;
 }
 
 .profile-link-display {
-  margin-bottom: 7.5px;
+  margin-right: 10px;
 }
 
 .edit-profile-button:hover {

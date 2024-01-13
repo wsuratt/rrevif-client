@@ -82,6 +82,7 @@
   margin: 0;
   margin-left: 5px;
   padding: 0;
+  color: black;
 }
 
 .description-container, .username-cont, .task-price-container {
