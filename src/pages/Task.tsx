@@ -29,6 +29,7 @@ export default function Task() {
   const [task, setTask] = useState<any[]>([]);
   const [isPoster, setIsPoster] = useState<boolean>(false)
   const [isSolver, setIsSolver] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
   const [ popup, setPopup ] = useState<boolean>(false);
   const [ notreviewed, setNotReviewed ] = useState<boolean>(true);
@@ -131,6 +132,10 @@ export default function Task() {
         setIsPoster(data.is_owner);
         setIsSolver(data.is_solver);
         setTaskExists(true);
+        setIsAdmin(data.is_admin);
+        if(data.poster[0]?.length > 0) {
+          setTaskExists(true)
+        }
       })
       .catch(error => {
         console.error('Fetch error:', error);
@@ -138,9 +143,23 @@ export default function Task() {
     }
   };
 
+  const deleteTask = () => {
+    if(token) {
+      fetch(API_BASE +  "api/task/delete" + task[0].id, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    }
+    setTaskExists(false)
+  }
+
   return (
     <div className="full-task-container">
       <Navbar />
+      { taskExists ?
+      <>
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{task[0]?.task_title}</h1>
@@ -153,6 +172,9 @@ export default function Task() {
           {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
               <button className="approve-task-button" onClick={e => setApprovePopup(true)}>Approve Solution</button>
             : <></>)}
+            {(isAdmin ? 
+              <div onClick={e => deleteTask()} className="delete-task">Delete</div>: <></>
+            )}
         </div>
         <div className="task-price-container">
           {`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}
@@ -210,6 +232,8 @@ export default function Task() {
       </>: 
       <></>
       }
+      </>
+      : <h1>This task does not exist.</h1>}
     </div>
   )
 }
