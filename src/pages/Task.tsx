@@ -173,7 +173,7 @@ export default function Task() {
               <button className="approve-task-button" onClick={e => setApprovePopup(true)}>Approve Solution</button>
             : <></>)}
             {(isAdmin ? 
-              <div onClick={e => deleteTask()} className="delete-task">Delete</div>: <></>
+              <div onClick={e => deleteTask()} className="delete-task">Delete Task</div>: <></>
             )}
         </div>
         <div className="task-price-container">

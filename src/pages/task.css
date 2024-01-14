@@ -85,6 +85,24 @@
   color: black;
 }
 
+.delete-task {
+  background-color: crimson;
+  color: white;
+  width: 145px;
+  text-align: center;
+  height: 30px;
+  margin-top: 30px;
+  margin-left: 30px;
+  padding-top: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.delete-task:hover {
+  background-color: rgb(159, 12, 41);
+  cursor: pointer;
+}
 .description-container, .username-cont, .task-price-container, .task-timestamp-container {
   margin-left: 25px;
 }
