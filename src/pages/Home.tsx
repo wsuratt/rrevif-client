@@ -15,7 +15,7 @@ const Home = () => {
   
   useEffect(() => {
     GetTasks();
-  }, [])
+  }, [token])
 
   const GetTasks = () => {
     if(token) {

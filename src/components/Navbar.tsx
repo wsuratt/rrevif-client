@@ -15,7 +15,7 @@ const Navbar = () => {
   
   useEffect(() => {
     GetUserInfo();
-  });
+  }, [token, username]);
 
   const GetUserInfo = () => {
     // refactor to use User objects

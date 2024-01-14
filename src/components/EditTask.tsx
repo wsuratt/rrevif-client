@@ -9,6 +9,7 @@ const API_BASE: string = "http://localhost:8080/";
 interface EditTaskProps {
   token: string | null;
   setPopup: (arg0: boolean) => void;
+  getTaskInfo: () => void;
   task: any[]
 } 
 
@@ -32,7 +33,7 @@ async function editTask(token: string | null, task_id: string, edited_task: Edit
   }
 }
 
-export default function EditTask({ token, setPopup, task }: EditTaskProps) {
+export default function EditTask({ token, setPopup, getTaskInfo, task }: EditTaskProps) {
   const [title, setTitle] = useState<string>(task[0]?.task_title);
   const [price, setPrice] = useState<string>(task[0]?.task_price);
   const [description, setDescription] = useState<string>(task[0]?.task_description);
@@ -48,6 +49,7 @@ export default function EditTask({ token, setPopup, task }: EditTaskProps) {
     if(editedTask.error) {
       alert(editedTask.error);
     }
+    getTaskInfo()
   };
 
   return (

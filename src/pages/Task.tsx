@@ -31,10 +31,15 @@ export default function Task() {
   const [isSolver, setIsSolver] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
   const [ popup, setPopup ] = useState<boolean>(false);
+  const [ notreviewed, setNotReviewed ] = useState<boolean>(true);
   const [ approve_popup, setApprovePopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
-  const [resetEffect, setResetEffect] = useState<boolean>(false)
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("task effect")
+    GetTaskInfo();
+  }, [token]);
 
   const handleClaim = async (e: FormEvent) => {
     e.preventDefault();
@@ -45,8 +50,8 @@ export default function Task() {
 
     if(updatedTask.error) {
       alert(updatedTask.error);
-
     }
+    GetTaskInfo();
   };
 
   const handleApprove = async (e: FormEvent) => {
@@ -60,7 +65,7 @@ export default function Task() {
     if(approvedTask.error) {
       alert(approvedTask.error);
     }
-    setResetEffect(!resetEffect);
+    GetTaskInfo();
   };
 
   async function updateTaskSolver(token: string | null, task_id: TaskId) {
@@ -76,7 +81,7 @@ export default function Task() {
       })
         .then(data => data.json())
     }
-    setResetEffect(!resetEffect);
+    GetTaskInfo();
   }
 
   async function approveTask(token: string | null, task_id: TaskId) {
@@ -91,12 +96,9 @@ export default function Task() {
       })
         .then(data => data.json())
     }
-    setResetEffect(!resetEffect);
+    GetTaskInfo();
   }
 
-  useEffect(() => {
-    GetTaskInfo();
-  }, [resetEffect]);
 
   if (!token) {
     return <Login />;
@@ -178,16 +180,16 @@ export default function Task() {
         </div>
         <div style={{"height": "20px"}}></div>
       </div>
-      {task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete) ?
-        <Review token={token} reviewee={solver} review_type='solver' task_id={task_id}/>
+      {notreviewed && (task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete)) ?
+        <Review token={token} setNotReviewed={setNotReviewed} reviewee={solver} review_type='solver' task_id={task_id}/>
         : <></>
       }
-      {task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete) ?
-        <Review token={token} reviewee={poster} review_type='poster' task_id={task_id} />
+      {notreviewed && (task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete)) ?
+        <Review token={token} setNotReviewed={setNotReviewed} reviewee={poster} review_type='poster' task_id={task_id} />
         : <></>
       }
       {popup ? 
-        <EditTask token={token} setPopup={setPopup} task={task} />
+        <EditTask token={token} getTaskInfo={GetTaskInfo} setPopup={setPopup} task={task} />
       : <></>}
       {approve_popup ? 
       <>

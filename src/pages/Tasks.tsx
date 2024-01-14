@@ -18,7 +18,7 @@ const Tasks = () => {
   
   useEffect(() => {
     GetTasks();
-  }, [])
+  }, [token])
 
   const GetTasks = () => {
     if(token) {

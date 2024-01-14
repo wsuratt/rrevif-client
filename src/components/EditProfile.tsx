@@ -9,6 +9,7 @@ const API_BASE: string = "http://localhost:8080/";
 interface EditProfileProps {
   token: string | null;
   setEditPopup: (arg0: boolean) => void;
+  getUserInfo: () => void;
   user: User;
 } 
 
@@ -40,7 +41,7 @@ async function editProfile(token: string | null, username: string, edited_profil
   }
 }
 
-export default function EditProfile({ token, setEditPopup, user }: EditProfileProps) {
+export default function EditProfile({ token, getUserInfo, setEditPopup, user }: EditProfileProps) {
   const [username, setUsername] = useState<string>(user.username);
   const [wallet_address, setWalletAddress] = useState<string>(user.wallet_address);
   const [bio, setBio] = useState<string>(user.bio);
@@ -59,6 +60,7 @@ export default function EditProfile({ token, setEditPopup, user }: EditProfilePr
     if(editedProfile.error) {
       alert(editedProfile.error);
     }
+    getUserInfo();
   };
 
   return (

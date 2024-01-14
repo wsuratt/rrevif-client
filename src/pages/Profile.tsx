@@ -33,7 +33,6 @@ export default function Profile() {
   const { token, setToken } = useToken();
   const [popupActive, setPopupActive] = useState(false);
   const [ edit_popup, setEditPopup ] = useState<boolean>(false);
-  const [resetEffect, setResetEffect] = useState<boolean>(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default function Profile() {
     if(username != undefined) {
         setName(username)
       }
-  }, [resetEffect]);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -52,6 +51,7 @@ export default function Profile() {
 
   const switchPopup = () => {
     setPopupActive(!popupActive);
+    GetUserInfo();
   }
 
 
@@ -64,6 +64,10 @@ export default function Profile() {
         }
       })
     }
+    GetUserInfo();
+    if(username != undefined) {
+        setName(username)
+      }
   }
 
   const GetUserInfo = () => {
@@ -175,7 +179,7 @@ export default function Profile() {
         <TaskCard token={token} key={index} task={task} />
       ))}
     </div>: <h3 className='task-title'>This user has not accepted any tasks.</h3>)}
-    {edit_popup ? <EditProfile token={token} setEditPopup={setEditPopup} user={{username: name, wallet_address: walletAddress, bio: bio, links: links}} />: <></>}
+    {edit_popup ? <EditProfile token={token} setEditPopup={setEditPopup} getUserInfo={GetUserInfo} user={{username: name, wallet_address: walletAddress, bio: bio, links: links}} />: <></>}
     </div>
   )
 }
