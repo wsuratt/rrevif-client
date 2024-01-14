@@ -46,7 +46,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
 
   useEffect(() => {
     generateQr();
-  }, []);
+  }, [token]);
 
   const generateQr = async () => {
     // 1 - Send a POST request to our backend and log the response URL

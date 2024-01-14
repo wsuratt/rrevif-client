@@ -14,14 +14,15 @@ const Tasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
+  const [resetEffect, setResetEffect] = useState<boolean>(false)
   
   useEffect(() => {
     GetTasks();
-  }, [])
+  }, [token])
 
   const GetTasks = () => {
     if(token) {
-      fetch(API_BASE + "api/tasks/", {
+      fetch(API_BASE + "api/tasks", {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + token

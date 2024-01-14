@@ -40,7 +40,7 @@ export default function Profile() {
     if(username != undefined) {
         setName(username)
       }
-  });
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -51,6 +51,7 @@ export default function Profile() {
 
   const switchPopup = () => {
     setPopupActive(!popupActive);
+    GetUserInfo();
   }
 
 
@@ -63,6 +64,10 @@ export default function Profile() {
         }
       })
     }
+    GetUserInfo();
+    if(username != undefined) {
+        setName(username)
+      }
   }
 
   const GetUserInfo = () => {
@@ -105,9 +110,11 @@ export default function Profile() {
       <div className="profile-block">
         <div className="profile-head">
           <h1 className="profile-title">{username}</h1>
-          <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
           { isUser ? 
+          <>
+            <div className="add-button" onClick={() => setPopupActive(true)}>Create Task</div>
             <div className="edit-profile-button" onClick={e => setEditPopup(true)}>Edit Profile</div>
+          </>
           : <></>}
         </div>
         {popupActive ? (
@@ -172,7 +179,7 @@ export default function Profile() {
         <TaskCard token={token} key={index} task={task} />
       ))}
     </div>: <h3 className='task-title'>This user has not accepted any tasks.</h3>)}
-    {edit_popup ? <EditProfile token={token} setEditPopup={setEditPopup} user={{username: name, wallet_address: walletAddress, bio: bio, links: links}} />: <></>}
+    {edit_popup ? <EditProfile token={token} setEditPopup={setEditPopup} getUserInfo={GetUserInfo} user={{username: name, wallet_address: walletAddress, bio: bio, links: links}} />: <></>}
     </div>
   )
 }

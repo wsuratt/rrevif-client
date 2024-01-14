@@ -71,11 +71,12 @@ const Users = () => {
         }
       })
     }
+    GetUsers();
   }  
   
   useEffect(() => {
     GetUsers();
-  }, [])
+  }, [token])
 
   const GetUsers = () => {
     if(token) {

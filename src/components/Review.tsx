@@ -7,6 +7,7 @@ const API_BASE: string = "http://localhost:8080/";
 
 interface ReviewProps {
   token: string | null;
+  setNotReviewed: (arg0: boolean) => void
   reviewee: any[];
   review_type: string;
   task_id: string | undefined;
@@ -34,13 +35,14 @@ async function addReview(token: string | null, new_review: newReview) {
   }
 }
 
-export default function Review({token, reviewee, review_type, task_id}: ReviewProps) {
+export default function Review({token, setNotReviewed, reviewee, review_type, task_id}: ReviewProps) {
   const [reviewee_id, setRevieweeId] = useState<string>(reviewee[0]?.user_id);
   const [rating, setRating] = useState<number>(0);
   const [rating_desc, setRatingDesc] = useState<string>("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setNotReviewed(false)
     setRevieweeId(reviewee[0].user_id)
 
     console.log(JSON.stringify({

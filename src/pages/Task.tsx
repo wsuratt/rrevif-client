@@ -29,10 +29,18 @@ export default function Task() {
   const [task, setTask] = useState<any[]>([]);
   const [isPoster, setIsPoster] = useState<boolean>(false)
   const [isSolver, setIsSolver] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [taskExists, setTaskExists] = useState<boolean>(false)
   const [ popup, setPopup ] = useState<boolean>(false);
+  const [ notreviewed, setNotReviewed ] = useState<boolean>(true);
+  const [ approve_popup, setApprovePopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("task effect")
+    GetTaskInfo();
+  }, [token]);
 
   const handleClaim = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,11 +51,12 @@ export default function Task() {
 
     if(updatedTask.error) {
       alert(updatedTask.error);
-
     }
+    GetTaskInfo();
   };
 
   const handleApprove = async (e: FormEvent) => {
+    setApprovePopup(false);
     e.preventDefault();
     
     const approvedTask = await approveTask(token, {
@@ -56,8 +65,8 @@ export default function Task() {
 
     if(approvedTask.error) {
       alert(approvedTask.error);
-
     }
+    GetTaskInfo();
   };
 
   async function updateTaskSolver(token: string | null, task_id: TaskId) {
@@ -73,6 +82,7 @@ export default function Task() {
       })
         .then(data => data.json())
     }
+    GetTaskInfo();
   }
 
   async function approveTask(token: string | null, task_id: TaskId) {
@@ -87,11 +97,9 @@ export default function Task() {
       })
         .then(data => data.json())
     }
+    GetTaskInfo();
   }
 
-  useEffect(() => {
-    GetTaskInfo();
-  });
 
   if (!token) {
     return <Login />;
@@ -118,13 +126,16 @@ export default function Task() {
         return res.json();
       })
       .then(data => {
-        console.log("Response Data", data)
         setPoster(data.poster);
         setSolver(data.solver);
         setTask(data.task)
         setIsPoster(data.is_owner);
         setIsSolver(data.is_solver);
         setTaskExists(true);
+        setIsAdmin(data.is_admin);
+        if(data.poster[0]?.length > 0) {
+          setTaskExists(true)
+        }
       })
       .catch(error => {
         console.error('Fetch error:', error);
@@ -132,9 +143,23 @@ export default function Task() {
     }
   };
 
+  const deleteTask = () => {
+    if(token) {
+      fetch(API_BASE +  "api/task/delete" + task[0].id, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    }
+    setTaskExists(false)
+  }
+
   return (
     <div className="full-task-container">
       <Navbar />
+      { taskExists ?
+      <>
       <div className="full-task-block">
         <div className="full-task-head">
           <h1 className="full-task-title">{task[0]?.task_title}</h1>
@@ -145,11 +170,17 @@ export default function Task() {
             <div className="edit-task-button" onClick={e => setPopup(true)}>Edit Task</div>
           : <></>)}
           {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
-              <button className="approve-task-button" onClick={handleApprove}>Approve Solution</button>
+              <button className="approve-task-button" onClick={e => setApprovePopup(true)}>Approve Solution</button>
             : <></>)}
+            {(isAdmin ? 
+              <div onClick={e => deleteTask()} className="delete-task">Delete Task</div>: <></>
+            )}
         </div>
         <div className="task-price-container">
-          <p>{`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}</p>
+          {`$${(Math.round(task[0]?.task_price * 100) / 100).toFixed(2)}`}
+        </div>
+        <div className="task-timestamp-container">
+          Posted: <p className="username">{`${(new Date(task[0]?.task_timestamp))?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}</p>
         </div>
         {(poster.length > 0 ? 
           <div className="username-cont">
@@ -171,17 +202,38 @@ export default function Task() {
         </div>
         <div style={{"height": "20px"}}></div>
       </div>
-      {task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete) ?
-        <Review token={token} reviewee={solver} review_type='solver' task_id={task_id}/>
+      {notreviewed && (task[0]?.is_complete && isPoster && !(task[0]?.solver_review_complete)) ?
+        <Review token={token} setNotReviewed={setNotReviewed} reviewee={solver} review_type='solver' task_id={task_id}/>
         : <></>
       }
-      {task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete) ?
-        <Review token={token} reviewee={poster} review_type='poster' task_id={task_id} />
+      {notreviewed && (task[0]?.is_complete && isSolver && !(task[0]?.poster_review_complete)) ?
+        <Review token={token} setNotReviewed={setNotReviewed} reviewee={poster} review_type='poster' task_id={task_id} />
         : <></>
       }
       {popup ? 
-        <EditTask token={token} setPopup={setPopup} task={task} />
+        <EditTask token={token} getTaskInfo={GetTaskInfo} setPopup={setPopup} task={task} />
       : <></>}
+      {approve_popup ? 
+      <>
+        <div className="profile-dimmed"></div>
+        <div className="approve-container">
+          <div className="approve-confirm-text">
+            Are you sure you would like to accept this solution? 
+            If you approve this task, you will be accepting this 
+            project as complete, and the payment to the solver 
+            will be processed.  Only approve the payment and solution
+            if both you and the solver have come to a consensus.
+          </div>
+          <div className="buttons-container">
+            <button className="approve-task-button approve-task-button-inner" onClick={handleApprove}>Approve Solution</button>
+            <div className="cancel-approve edit-task-button" onClick={e => setApprovePopup(false)}>Cancel</div>
+          </div>
+        </div>
+      </>: 
+      <></>
+      }
+      </>
+      : <h1>This task does not exist.</h1>}
     </div>
   )
 }
