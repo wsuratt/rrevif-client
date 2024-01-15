@@ -9,6 +9,8 @@ import Signup from './pages/Signup';
 import About from './pages/About';
 import Profile from './pages/Profile';
 import Users from './pages/Users';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 
 const App = () => {
@@ -20,6 +22,8 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/users" element={<Users />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/tasks" element={<Tasks />} />
             {/* <Route path="/tasks/:title" element={<Task />} /> */}
