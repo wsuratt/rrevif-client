@@ -31,7 +31,12 @@ export default function ResetPassword() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    resetPassword(token, {password: password});
+    const status = await resetPassword(token, {password: password});
+    if(status.status) {
+      navigate("/login");
+    } else {
+      alert('Password reset failed. Please try again.')
+    }
   };
 
   return (

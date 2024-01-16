@@ -30,7 +30,12 @@ export default function ForgotPassword() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    forgotPassword({username});
+    const status = await forgotPassword({username});
+    if(status.error) {
+      alert(status.error);
+    } else {
+      alert('Please check your email for instructions.');
+    }
   };
 
   return (
