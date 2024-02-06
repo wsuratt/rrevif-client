@@ -98,3 +98,10 @@ hr {
 .task-timestamp {
   margin-left: auto;
 }
+
+.task-generation-input {
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 2px solid lightgrey;
+}

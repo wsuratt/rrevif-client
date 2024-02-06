@@ -13,6 +13,7 @@ interface AddTaskProps {
 
 interface NewTask {
   title: string | undefined;
+  category: string | undefined;
   description: string | undefined;
   price: string | undefined;
   reference: string | undefined;
@@ -39,6 +40,7 @@ function timeout(delay: number) {
 export default function AddTask({ token, switchPopup }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
+  const [category, setCategory] = useState<string>("Content");;
   const [price, setPrice] = useState<string | undefined>();
   const [qrCode, setQrCode] = useState<string>();
   const [reference, setReference] = useState<string>();
@@ -73,6 +75,7 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
     
     const addedTask = await addTask(token, {
       title,
+      category,
       description,
       price,
       reference
@@ -96,6 +99,13 @@ export default function AddTask({ token, switchPopup }: AddTaskProps) {
       <form>
         <label className="add-task-label">
           <input required className="add-task-input" placeholder="Enter task title" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
+        </label>
+        <label className="add-task-label">
+          Task Category:
+          <select className="add-task-dropdown" onChange={(e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}>
+            <option value="Content">Content</option>
+            <option value="Development">Development</option>
+          </select>
         </label>
         <label className="add-task-label">
           <input required className="add-task-input" placeholder="Enter task description" type="text" onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />

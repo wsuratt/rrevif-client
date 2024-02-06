@@ -35,6 +35,8 @@ export default function Task() {
   const [ notreviewed, setNotReviewed ] = useState<boolean>(true);
   const [ approve_popup, setApprovePopup ] = useState<boolean>(false);
   const { token, setToken } = useToken();
+  const [ workTask, setWorkTask ] = useState<boolean>(false);
+  const [taskGeneration, setTaskGeneration] = useState<string>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,13 +107,7 @@ export default function Task() {
     return <Login />;
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken({token: null});
-    navigate("/");
-  };
-
-  const GetTaskInfo = () => {
+  const GetTaskInfo = () => { // need to check for 403
     if (token) {
       fetch(API_BASE + "api/task-by-id/" + task_id, {
         method: 'GET',
@@ -169,6 +165,12 @@ export default function Task() {
           {(isPoster && !(solver.length > 0) ? 
             <div className="edit-task-button" onClick={e => setPopup(true)}>Edit Task</div>
           : <></>)}
+          {(isSolver ? // isSolver
+            <div className="edit-task-button" onClick={e => setWorkTask(true)}>Save</div>
+          : <></>)}
+          {(isSolver ? // isSolver
+            <div className="edit-task-button" onClick={e => setWorkTask(true)}>Mark as Done</div>
+          : <></>)}
           {((isPoster && solver.length > 0) && !(task[0]?.is_complete) ?
               <button className="approve-task-button" onClick={e => setApprovePopup(true)}>Approve Solution</button>
             : <></>)}
@@ -199,6 +201,14 @@ export default function Task() {
         <div className="description-container">
           <p className="description-title">Description</p>
           <p>{task[0]?.task_description}</p>
+        </div>
+        <div className="description-container">
+          <p className="description-title">AI Generation</p>
+          {isSolver ? (
+            <form>
+                <textarea required className="task-generation-input" value={task[0]?.task_generation} rows={10} cols={60} />
+            </form>
+          ) : ( <p>{task[0]?.task_generation}</p> )}
         </div>
         <div style={{"height": "20px"}}></div>
       </div>
